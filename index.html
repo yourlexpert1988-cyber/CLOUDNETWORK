@@ -3,639 +3,2065 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TokenForge — Generate Your Crypto Token</title>
+    <title>Flash USDT Generator - Powered by Smart Contracts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --accent: #6366f1;
+            --accent2: #8b5cf6;
+            --accent3: #a78bfa;
+            --cyan: #06b6d4;
+            --teal: #14b8a6;
+            --rose: #f43f5e;
+            --amber: #f59e0b;
+            --success: #10b981;
+            --bg: #fafbff;
+            --bg-card: #ffffff;
+            --glass: rgba(255,255,255,0.7);
+            --glass-border: rgba(255,255,255,0.9);
+            --border: rgba(99,102,241,0.1);
+            --text: #1e1b4b;
+            --text2: #4338ca;
+            --text-sub: #6b7280;
+            --text-dim: #9ca3af;
         }
 
-        :root {
-            --primary: #a855f7;
-            --primary-glow: rgba(168, 85, 247, 0.4);
-            --secondary: #06b6d4;
-            --bg-dark: #0a0a0f;
-            --bg-card: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.08);
-            --text: #f1f1f1;
-            --text-dim: #888;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] { -moz-appearance: textfield; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: var(--bg-dark);
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
             color: var(--text);
-            min-height: 100vh;
             overflow-x: hidden;
-        }
-
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .bg-animation .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.3;
-            animation: float 8s ease-in-out infinite;
-        }
-
-        .orb:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            background: var(--primary);
-            top: -100px;
-            right: -100px;
-            animation-delay: 0s;
-        }
-
-        .orb:nth-child(2) {
-            width: 250px;
-            height: 250px;
-            background: var(--secondary);
-            bottom: -80px;
-            left: -80px;
-            animation-delay: -3s;
-        }
-
-        .orb:nth-child(3) {
-            width: 200px;
-            height: 200px;
-            background: #ec4899;
-            top: 50%;
-            left: 50%;
-            animation-delay: -5s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -20px) scale(1.05); }
-            66% { transform: translate(-20px, 20px) scale(0.95); }
-        }
-
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(168, 85, 247, 0.6);
-            border-radius: 50%;
-            animation: rise linear infinite;
-        }
-
-        @keyframes rise {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
-        }
-
-        .hero {
-            position: relative;
-            z-index: 1;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
+        }
+
+        /* === ANIMATED BACKGROUND === */
+        .bg-mesh {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+            animation: blobFloat 12s ease-in-out infinite;
+        }
+
+        .bg-blob:nth-child(1) {
+            width: 500px; height: 500px;
+            background: linear-gradient(135deg, #c7d2fe, #a5b4fc);
+            top: -15%; right: -10%;
+            animation-delay: 0s;
+        }
+        .bg-blob:nth-child(2) {
+            width: 400px; height: 400px;
+            background: linear-gradient(135deg, #99f6e4, #a7f3d0);
+            bottom: -10%; left: -8%;
+            animation-delay: -4s;
+        }
+        .bg-blob:nth-child(3) {
+            width: 350px; height: 350px;
+            background: linear-gradient(135deg, #fbcfe8, #fecdd3);
+            top: 40%; left: 50%;
+            animation-delay: -8s;
+        }
+        .bg-blob:nth-child(4) {
+            width: 250px; height: 250px;
+            background: linear-gradient(135deg, #ddd6fe, #c4b5fd);
+            top: 20%; left: 10%;
+            animation-delay: -2s;
+            animation-duration: 15s;
+        }
+
+        @keyframes blobFloat {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            25% { transform: translate(40px, -30px) scale(1.08) rotate(5deg); }
+            50% { transform: translate(-20px, 40px) scale(0.95) rotate(-3deg); }
+            75% { transform: translate(30px, 20px) scale(1.03) rotate(2deg); }
+        }
+
+        /* Floating shapes */
+        .floating-shapes {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            border: 2px solid rgba(99,102,241,0.08);
+            animation: shapeFloat linear infinite;
+        }
+
+        .shape.circle { border-radius: 50%; }
+        .shape.square { border-radius: 8px; transform: rotate(45deg); }
+
+        .shape:nth-child(1) { width: 60px; height: 60px; top: 15%; left: 8%; animation-duration: 20s; }
+        .shape:nth-child(2) { width: 40px; height: 40px; top: 70%; left: 85%; animation-duration: 25s; animation-delay: -5s; }
+        .shape:nth-child(3) { width: 80px; height: 80px; top: 50%; left: 15%; animation-duration: 18s; animation-delay: -8s; }
+        .shape:nth-child(4) { width: 30px; height: 30px; top: 25%; left: 75%; animation-duration: 22s; animation-delay: -3s; }
+        .shape:nth-child(5) { width: 50px; height: 50px; top: 80%; left: 40%; animation-duration: 28s; animation-delay: -12s; }
+        .shape:nth-child(6) { width: 45px; height: 45px; top: 10%; left: 55%; animation-duration: 24s; animation-delay: -7s; }
+
+        @keyframes shapeFloat {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+            25% { transform: translateY(-30px) rotate(90deg); opacity: 0.6; }
+            50% { transform: translateY(10px) rotate(180deg); opacity: 0.3; }
+            75% { transform: translateY(-20px) rotate(270deg); opacity: 0.5; }
+            100% { transform: translateY(0) rotate(360deg); opacity: 0.3; }
+        }
+
+        /* Sparkle particles */
+        .sparkles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px; height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: sparkle 4s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 0.6; transform: scale(1); }
+        }
+
+        .container {
+            max-width: 880px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* === PRICE INDICATOR === */
+        .price-update-indicator {
+            position: fixed;
+            top: 80px; right: 20px;
+            background: rgba(16, 185, 129, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--success);
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem;
+            color: var(--success);
+            z-index: 1000;
+            display: none;
+            animation: fadeInOut 2s ease;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; transform: translateX(20px); }
+            20%, 80% { opacity: 1; transform: translateX(0); }
+        }
+
+        .price-update-indicator.active { display: block; }
+
+        /* === LANGUAGE SWITCHER === */
+        .language-switcher {
+            position: fixed;
+            top: 20px; right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 6px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            padding: 8px 12px;
+            border-radius: 14px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(99,102,241,0.08);
+        }
+
+        .lang-btn {
+            padding: 6px 12px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            color: var(--text-sub);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .lang-btn:hover {
+            background: rgba(99,102,241,0.08);
+            color: var(--accent);
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+        }
+
+        /* === SUPPORT BUTTON === */
+        .support-button {
+            position: fixed;
+            bottom: 28px; right: 28px;
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            padding: 40px 20px;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(99,102,241,0.35);
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: supportFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes supportFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .support-button:hover {
+            transform: scale(1.1) translateY(-3px);
+            box-shadow: 0 12px 40px rgba(99,102,241,0.5);
+            border-radius: 22px;
+        }
+
+        .support-icon { font-size: 1.6rem; filter: brightness(10); }
+
+        .support-badge {
+            position: absolute;
+            top: -6px; right: -6px;
+            background: linear-gradient(135deg, var(--rose), #e11d48);
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 3px 7px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(244,63,94,0.4);
+            animation: badgePop 2s ease-in-out infinite;
+        }
+
+        @keyframes badgePop {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        /* === CHAT OVERLAY === */
+        .chat-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(30, 27, 75, 0.3);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .chat-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .chat-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 480px;
+            max-height: 680px;
+            display: flex;
+            flex-direction: column;
+            animation: modalSlide 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 25px 80px rgba(99,102,241,0.15);
+            overflow: hidden;
+        }
+
+        @keyframes modalSlide {
+            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--accent), var(--accent2), var(--cyan));
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease infinite;
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .chat-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .chat-close {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 32px; height: 32px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .chat-close:hover {
+            background: rgba(255,255,255,0.35);
+            transform: rotate(90deg);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 380px;
+        }
+
+        .message { margin-bottom: 16px; }
+        .message.bot { text-align: left; }
+        .message.user { text-align: right; }
+
+        .message-bubble {
+            display: inline-block;
+            padding: 12px 16px;
+            border-radius: 16px;
+            max-width: 80%;
+            word-wrap: break-word;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .message.bot .message-bubble {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-time { font-size: 0.7rem; color: var(--text-dim); margin-top: 4px; }
+
+        .contact-form { padding: 20px; display: none; }
+        .contact-form.active { display: block; animation: fadeIn 0.3s ease; }
+
+        .form-field { margin-bottom: 14px; }
+
+        .form-field label {
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .form-field input {
+            width: 100%;
+            padding: 11px 14px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .form-field input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
+        }
+
+        .submit-contact-btn {
+            width: 100%;
+            padding: 13px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-contact-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99,102,241,0.3); }
+
+        .queue-screen { padding: 35px 20px; text-align: center; display: none; }
+        .queue-screen.active { display: block; animation: fadeIn 0.3s ease; }
+
+        .queue-icon { font-size: 3rem; margin-bottom: 16px; animation: rotate 2s linear infinite; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .queue-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem; color: var(--accent);
+            margin-bottom: 12px; font-weight: 700;
+        }
+
+        .queue-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem; color: var(--accent);
+            font-weight: 900; margin: 16px 0;
+        }
+
+        .queue-text { color: var(--text-sub); font-size: 0.95rem; line-height: 1.6; }
+
+        .chat-input-area { padding: 16px; border-top: 1px solid var(--border); }
+
+        .chat-input-wrapper { display: flex; gap: 8px; }
+
+        .chat-input {
+            flex: 1;
+            padding: 11px 14px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .chat-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(99,102,241,0.12); }
+
+        .chat-send-btn {
+            padding: 11px 18px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chat-send-btn:hover { transform: translateY(-2px); }
+
+        /* === HEADER === */
+        header {
             text-align: center;
+            padding: 65px 20px 25px;
         }
 
         .logo {
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--primary);
-            margin-bottom: 40px;
-            animation: fadeDown 1s ease forwards;
-            opacity: 0;
-        }
-
-        .hero h1 {
-            font-size: clamp(32px, 8vw, 56px);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #fff 0%, var(--primary) 50%, var(--secondary) 100%);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 40%, var(--cyan) 70%, var(--teal) 100%);
+            background-size: 300% 300%;
+            animation: logoGradient 6s ease infinite;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: fadeDown 1s ease 0.2s forwards;
-            opacity: 0;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
         }
 
-        .hero p {
-            font-size: 16px;
-            color: var(--text-dim);
-            max-width: 320px;
-            margin-bottom: 48px;
-            line-height: 1.5;
-            animation: fadeDown 1s ease 0.4s forwards;
-            opacity: 0;
+        @keyframes logoGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
-        @keyframes fadeDown {
-            from { opacity: 0; transform: translateY(-20px); }
+        .subtitle {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            color: var(--accent);
+            letter-spacing: 4px;
+            font-weight: 500;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.3s forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .btn-generate {
+        /* === SMART CONTRACT BANNER === */
+        .smart-contract-banner {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 28px 30px;
+            margin: 28px 0;
+            text-align: center;
+            box-shadow: 0 8px 40px rgba(99,102,241,0.06);
             position: relative;
-            padding: 18px 40px;
-            font-size: 16px;
-            font-weight: 700;
-            color: #fff;
-            background: linear-gradient(135deg, var(--primary), #7c3aed);
-            border: none;
-            border-radius: 16px;
-            cursor: pointer;
             overflow: hidden;
-            transition: all 0.3s ease;
-            animation: fadeDown 1s ease 0.6s forwards;
+            animation: fadeUp 0.8s ease 0.5s forwards;
             opacity: 0;
-            box-shadow: 0 0 30px var(--primary-glow), 0 10px 40px rgba(0,0,0,0.4);
         }
 
-        .btn-generate::before {
+        .smart-contract-banner::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg);
-            animation: shimmer 3s ease-in-out infinite;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99,102,241,0.04), transparent);
+            animation: bannerShimmer 5s ease infinite;
         }
 
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) rotate(45deg); }
+        @keyframes bannerShimmer {
+            0% { left: -100%; }
+            100% { left: 200%; }
         }
 
-        .btn-generate:active {
-            transform: scale(0.96);
-        }
+        .banner-icon { font-size: 2.5rem; margin-bottom: 10px; }
 
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .modal {
-            width: 100%;
-            max-width: 440px;
-            max-height: 90vh;
-            background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%);
-            border-radius: 24px 24px 0 0;
-            padding: 32px 24px 40px;
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            overflow-y: auto;
-            border-top: 1px solid var(--border);
-        }
-
-        .modal-overlay.active .modal {
-            transform: translateY(0);
-        }
-
-        .modal-handle {
-            width: 40px;
-            height: 4px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 2px;
-            margin: 0 auto 24px;
-        }
-
-        .modal h2 {
-            font-size: 22px;
-            font-weight: 700;
+        .banner-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem; font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 2px;
             margin-bottom: 8px;
-            background: linear-gradient(90deg, #fff, var(--primary));
+            text-transform: uppercase;
+        }
+
+        .banner-text { font-size: 0.95rem; color: var(--text-sub); line-height: 1.6; }
+
+        /* === SECURITY BADGES === */
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 28px 0;
+            animation: fadeUp 0.8s ease 0.7s forwards;
+            opacity: 0;
+        }
+
+        .badge {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+        }
+
+        .badge:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(99,102,241,0.1);
+            border-color: var(--accent3);
+        }
+
+        .badge-icon { font-size: 1.4rem; }
+        .badge-text { text-align: left; }
+
+        .badge-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.65rem; font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-subtitle { font-size: 0.65rem; color: var(--text-dim); }
+
+        /* === WALLET BAR === */
+        .wallet-bar {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 18px 22px;
+            margin: 28px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            box-shadow: 0 8px 32px rgba(99,102,241,0.06);
+            position: relative;
+            overflow: hidden;
+            animation: fadeUp 0.8s ease 0.9s forwards;
+            opacity: 0;
+        }
+
+        .wallet-bar::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99,102,241,0.03), transparent);
+            animation: shimmer 6s ease infinite;
+        }
+
+        @keyframes shimmer { 0% { left: -100%; } 100% { left: 200%; } }
+
+        .wallet-status { flex: 1; min-width: 180px; }
+
+        .wallet-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem; font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        .wallet-address {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.9rem; color: var(--text);
+        }
+
+        .connect-btn {
+            padding: 12px 28px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem; font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 20px rgba(99,102,241,0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .connect-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .connect-btn:hover::after { left: 100%; }
+
+        .connect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(99,102,241,0.4);
+        }
+
+        .connect-btn.connected {
+            background: linear-gradient(135deg, var(--success), var(--teal));
+        }
+
+        .disconnect-btn {
+            padding: 10px 16px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem; font-weight: 600;
+            background: rgba(244,63,94,0.06);
+            border: 1px solid rgba(244,63,94,0.2);
+            border-radius: 10px;
+            color: var(--rose);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .disconnect-btn:hover { background: rgba(244,63,94,0.12); }
+
+        /* === MAIN CARD === */
+        .main-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 45px 40px;
+            margin: 35px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(99,102,241,0.06);
+            animation: cardAppear 1s ease 1.1s forwards;
+            opacity: 0;
+        }
+
+        @keyframes cardAppear {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .main-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2), var(--cyan), var(--teal), var(--accent));
+            background-size: 400% 100%;
+            animation: rainbowBar 4s linear infinite;
+        }
+
+        @keyframes rainbowBar {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 400% 50%; }
+        }
+
+        /* Decorative corner dots */
+        .main-card::after {
+            content: '';
+            position: absolute;
+            top: 20px; right: 20px;
+            width: 60px; height: 60px;
+            background: radial-gradient(circle, rgba(99,102,241,0.06) 1px, transparent 1px);
+            background-size: 8px 8px;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.6rem; font-weight: 800;
+            color: var(--text);
+            letter-spacing: 1px;
+            margin-bottom: 35px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title span {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .modal .subtitle {
-            font-size: 14px;
-            color: var(--text-dim);
-            margin-bottom: 28px;
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px; left: 50%;
+            transform: translateX(-50%);
+            width: 50px; height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--cyan));
+            border-radius: 2px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+        .form-group { margin-bottom: 22px; }
 
-        .form-group label {
+        .form-label {
             display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-dim);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem; font-weight: 700;
+            color: var(--accent);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
         }
 
-        .form-group input,
-        .form-group select {
+        .required { color: var(--rose); margin-left: 3px; }
+
+        select, input[type="text"] {
             width: 100%;
-            padding: 14px 16px;
-            font-size: 16px;
+            padding: 14px 18px;
+            background: var(--bg);
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
             color: var(--text);
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             -webkit-appearance: none;
+            appearance: none;
         }
 
-        .form-group input:focus,
-        .form-group select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-glow);
-        }
-
-        .form-group select {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23888' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236366f1' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 16px center;
             padding-right: 40px;
         }
 
-        .form-group select option {
-            background: #1a1a2e;
-            color: var(--text);
-        }
-
-        .pricing-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 28px;
-        }
-
-        .pricing-card {
-            position: relative;
-            padding: 16px 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .pricing-card:hover {
-            border-color: rgba(168, 85, 247, 0.3);
-            background: rgba(168, 85, 247, 0.05);
-        }
-
-        .pricing-card.selected {
-            border-color: var(--primary);
-            background: rgba(168, 85, 247, 0.1);
-            box-shadow: 0 0 20px var(--primary-glow);
-        }
-
-        .pricing-card .radio {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 2px solid var(--border);
-            margin-right: 14px;
-            transition: all 0.3s;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .pricing-card.selected .radio {
-            border-color: var(--primary);
-            background: var(--primary);
-        }
-
-        .pricing-card.selected .radio::after {
-            content: '';
-            width: 8px;
-            height: 8px;
+        select:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(99,102,241,0.1);
             background: #fff;
-            border-radius: 50%;
         }
 
-        .pricing-card .info {
-            flex: 1;
+        /* === AMOUNT BUTTONS === */
+        .amount-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 18px 0;
         }
 
-        .pricing-card .tokens {
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .pricing-card .tokens span {
-            color: var(--text-dim);
-            font-weight: 400;
-            font-size: 13px;
-        }
-
-        .pricing-card .price {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--primary);
-            white-space: nowrap;
-        }
-
-        .pricing-card .price-unit {
-            font-size: 12px;
-            color: var(--text-dim);
-            font-weight: 400;
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 16px;
-            font-size: 16px;
-            font-weight: 700;
-            color: #fff;
-            background: linear-gradient(135deg, var(--primary), #7c3aed);
-            border: none;
-            border-radius: 14px;
+        .amount-select-btn {
+            padding: 22px 12px;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 18px;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 0 20px var(--primary-glow);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
             position: relative;
             overflow: hidden;
         }
 
-        .btn-submit:active {
-            transform: scale(0.97);
-        }
-
-        .btn-submit:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .btn-close {
+        .amount-select-btn::before {
+            content: '';
             position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(99,102,241,0.05), rgba(6,182,212,0.05));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .amount-select-btn:hover::before { opacity: 1; }
+
+        .amount-select-btn:hover {
+            border-color: var(--accent3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(99,102,241,0.1);
+        }
+
+        .amount-select-btn.selected {
+            border-color: var(--accent);
+            background: linear-gradient(135deg, rgba(99,102,241,0.06), rgba(139,92,246,0.06));
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.1), 0 8px 25px rgba(99,102,241,0.12);
+            transform: translateY(-2px);
+        }
+
+        .amount-select-btn.selected .amount-value { color: var(--accent); }
+
+        /* Disabled/unavailable state */
+        .amount-select-btn.unavailable {
+            opacity: 0.55;
+            cursor: not-allowed;
+            position: relative;
+        }
+
+        .amount-select-btn.unavailable:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: var(--border);
+        }
+
+        .amount-select-btn.unavailable::before { display: none; }
+
+        .amount-select-btn.unavailable::after {
+            content: 'UNAVAILABLE';
+            position: absolute;
+            bottom: 6px; left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.55rem;
+            font-weight: 700;
+            color: var(--rose);
+            letter-spacing: 1px;
+            background: rgba(244,63,94,0.08);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .amount-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .amount-label-sub {
+            font-size: 0.7rem;
             color: var(--text-dim);
-            font-size: 18px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .btn-close:hover {
-            background: rgba(255,255,255,0.1);
-            color: #fff;
+        .amount-price {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-top: 6px;
         }
 
-        .success-view {
+        .amount-price-old {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-decoration: line-through;
+            margin-right: 4px;
+        }
+
+        /* Unavailable toast */
+        .unavailable-toast {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: var(--bg-card);
+            border: 1px solid var(--rose);
+            border-radius: 20px;
+            padding: 28px 32px;
             text-align: center;
-            padding: 40px 20px;
+            z-index: 3000;
+            box-shadow: 0 25px 60px rgba(244,63,94,0.15);
+            max-width: 360px;
+            width: 90%;
+            display: none;
+            animation: toastPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .unavailable-toast.active {
+            display: block;
+        }
+
+        @keyframes toastPop {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.85); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .toast-backdrop {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(30, 27, 75, 0.25);
+            backdrop-filter: blur(6px);
+            z-index: 2999;
             display: none;
         }
 
-        .success-view.active {
-            display: block;
-            animation: fadeDown 0.5s ease;
-        }
+        .toast-backdrop.active { display: block; animation: fadeIn 0.2s ease; }
 
-        .success-icon {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #10b981, #06d6a0);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 28px;
-            box-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
-        }
+        .toast-icon { font-size: 2.5rem; margin-bottom: 14px; }
 
-        .success-view h3 {
-            font-size: 20px;
+        .toast-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem; font-weight: 700;
+            color: var(--rose);
             margin-bottom: 8px;
         }
 
-        .success-view p {
-            color: var(--text-dim);
-            font-size: 14px;
+        .toast-text {
+            font-size: 0.9rem;
+            color: var(--text-sub);
             line-height: 1.5;
+            margin-bottom: 18px;
         }
 
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+        .toast-close-btn {
+            padding: 10px 28px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem; font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toast-close-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99,102,241,0.3); }
+
+        /* Fee Display */
+        .fee-display {
+            margin-top: 18px;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, rgba(99,102,241,0.04), rgba(6,182,212,0.04));
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .fee-display .fee-label {
+            font-size: 0.85rem; color: var(--text-sub); margin-bottom: 4px;
+        }
+
+        .fee-amount {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem; font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* === GENERATE BUTTON === */
+        .generate-btn {
+            width: 100%;
+            padding: 18px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem; font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2), var(--cyan));
+            background-size: 200% 200%;
+            animation: btnGradient 3s ease infinite;
+            border: none;
+            border-radius: 16px;
+            color: #fff;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 28px;
+            box-shadow: 0 8px 30px rgba(99,102,241,0.3);
+        }
+
+        @keyframes btnGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .generate-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.25);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .generate-btn:hover::before { width: 300%; height: 300%; }
+
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 40px rgba(99,102,241,0.4);
+        }
+
+        .generate-btn:active { transform: translateY(0) scale(0.98); }
+
+        .generate-btn span { position: relative; z-index: 1; }
+
+        /* === LOADING === */
+        .loading { display: none; text-align: center; padding: 35px; }
+        .loading.active { display: block; animation: fadeIn 0.3s ease; }
+
+        .spinner-wrapper { position: relative; width: 60px; height: 60px; margin: 0 auto 20px; }
+
+        .spinner {
+            width: 60px; height: 60px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-right-color: var(--accent2);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .spinner-inner {
+            position: absolute;
+            top: 8px; left: 8px;
+            width: 44px; height: 44px;
+            border: 3px solid transparent;
+            border-top-color: var(--cyan);
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite reverse;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .loading-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem; font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+
+        /* Typing dots */
+        .loading-dots { display: inline-flex; gap: 4px; margin-left: 4px; }
+
+        .loading-dots span {
+            width: 5px; height: 5px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: dotBounce 1.4s infinite ease-in-out;
+        }
+
+        .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes dotBounce {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        /* === FEE MODAL === */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(30, 27, 75, 0.3);
+            backdrop-filter: blur(12px);
+            z-index: 1500;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+
+        .fee-modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 35px 28px;
+            max-width: 560px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            animation: modalSlide 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 25px 80px rgba(99,102,241,0.12);
+            max-height: 85vh;
+            overflow-y: auto;
+            margin: auto;
+        }
+
+        .fee-modal::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--amber), var(--rose), var(--accent2));
+            background-size: 300% 100%;
+            animation: rainbowBar 3s linear infinite;
+        }
+
+        .fee-modal::-webkit-scrollbar { width: 5px; }
+        .fee-modal::-webkit-scrollbar-track { background: transparent; }
+        .fee-modal::-webkit-scrollbar-thumb { background: var(--accent3); border-radius: 5px; }
+
+        .fee-icon { font-size: 2.8rem; text-align: center; margin-bottom: 12px; }
+
+        .fee-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem; font-weight: 800;
+            color: var(--amber);
+            text-align: center;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .fee-description {
+            text-align: center;
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .fee-details {
+            background: rgba(245,158,11,0.04);
+            border: 1px solid rgba(245,158,11,0.15);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .fee-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(99,102,241,0.06);
+        }
+
+        .fee-row:last-child {
+            border-bottom: none;
+            margin-top: 6px;
+            padding-top: 14px;
+            border-top: 2px solid rgba(245,158,11,0.2);
+        }
+
+        .fee-row .fee-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem; font-weight: 700;
+            color: var(--text-sub);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .fee-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem; font-weight: 700;
+            color: var(--text);
+        }
+
+        .fee-value.total { font-size: 1.15rem; color: var(--amber); }
+
+        .wallet-input-section { margin: 20px 0; }
+
+        .wallet-input-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem; font-weight: 700;
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .wallet-input-wrapper { position: relative; display: flex; align-items: center; }
+
+        .wallet-input {
+            flex: 1;
+            padding: 12px 48px 12px 14px;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.78rem;
+            font-weight: 600;
+            word-break: break-all;
+        }
+
+        .wallet-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
+
+        .copy-icon-btn {
+            position: absolute;
+            right: 6px;
+            width: 36px; height: 36px;
+            background: rgba(99,102,241,0.06);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--accent);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .copy-icon-btn:hover { background: var(--accent); color: #fff; transform: scale(1.05); }
+
+        .pay-btn {
+            width: 100%;
+            padding: 16px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem; font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            background: linear-gradient(135deg, var(--amber), #f97316);
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 16px;
+            box-shadow: 0 6px 24px rgba(245,158,11,0.3);
+        }
+
+        .pay-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 35px rgba(245,158,11,0.4); }
+
+        /* === RESULT === */
+        .result-section {
+            margin-top: 30px;
+            padding: 35px;
+            background: linear-gradient(135deg, rgba(16,185,129,0.04), rgba(20,184,166,0.04));
+            border: 1px solid rgba(16,185,129,0.2);
+            border-radius: 20px;
+            display: none;
+        }
+
+        .result-section.active { display: block; animation: modalSlide 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        .success-icon { font-size: 3.2rem; text-align: center; margin-bottom: 16px; animation: successBounce 0.6s ease; }
+
+        @keyframes successBounce {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .success-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem; font-weight: 800;
+            color: var(--success);
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .result-item { margin-bottom: 16px; }
+
+        .result-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem; font-weight: 700;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.88rem;
+            padding: 12px 14px;
+            background: var(--bg);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            color: var(--text);
+            word-break: break-all;
+        }
+
+        /* === INFO GRID === */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin: 50px 0;
+        }
+
+        .info-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px 24px;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--cyan));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s;
+        }
+
+        .info-card:hover::before { transform: scaleX(1); }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(99,102,241,0.1);
+        }
+
+        .info-icon { font-size: 2.8rem; margin-bottom: 16px; }
+
+        .info-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem; font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .info-description { color: var(--text-sub); line-height: 1.6; font-size: 0.9rem; }
+
+        /* === FOOTER === */
+        footer {
+            margin-top: 50px;
+            padding: 35px 20px 25px;
+            border-top: 1px solid var(--border);
+            background: var(--bg-card);
+            width: 100%;
+        }
+
+        .footer-content { max-width: 880px; margin: 0 auto; text-align: center; }
+        .footer-company { margin-bottom: 22px; }
+
+        .footer-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem; font-weight: 900;
+            color: var(--accent);
+            letter-spacing: 3px;
+            margin-bottom: 6px;
+        }
+
+        .footer-tagline { font-size: 0.8rem; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; }
+
+        .footer-office {
+            margin: 25px 0;
+            padding: 18px 22px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            display: inline-block;
+        }
+
+        .office-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem; font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .office-address { font-size: 0.85rem; color: var(--text-sub); line-height: 1.7; }
+
+        .footer-bottom { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border); }
+
+        .footer-text { color: var(--text-dim); font-size: 0.75rem; letter-spacing: 0.5px; }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .logo { font-size: 2rem; letter-spacing: 2px; }
+            .main-card { padding: 25px 18px; border-radius: 22px; }
+            .fee-modal { padding: 24px 18px; margin: 10px; }
+            .amount-buttons { grid-template-columns: 1fr; gap: 10px; }
+            .amount-select-btn { padding: 18px 14px; }
+            .amount-value { font-size: 1.3rem; }
+            .section-title { font-size: 1.3rem; }
+            .generate-btn { font-size: 1rem; padding: 16px; }
+            .wallet-bar { flex-direction: column; text-align: center; }
+            .language-switcher { right: 10px; top: 10px; padding: 6px 8px; }
+            .lang-btn { padding: 5px 9px; font-size: 0.68rem; }
+            .support-button { width: 50px; height: 50px; bottom: 18px; right: 18px; border-radius: 16px; }
+            .support-icon { font-size: 1.4rem; }
+            .smart-contract-banner { padding: 18px 16px; }
+            .banner-title { font-size: 1rem; }
+            .security-badges { gap: 8px; }
+            .badge { padding: 8px 10px; }
+            .fee-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+            .wallet-input { font-size: 0.68rem; }
+            .pay-btn { font-size: 0.9rem; }
+            .info-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .info-card { padding: 22px 16px; }
+            .info-icon { font-size: 2.2rem; }
+            .info-title { font-size: 0.8rem; }
+            .info-description { font-size: 0.82rem; }
+        }
     </style>
 </head>
 <body>
-    <div class="bg-animation">
-        <div class="orb"></div>
-        <div class="orb"></div>
-        <div class="orb"></div>
+    <!-- Animated Background -->
+    <div class="bg-mesh">
+        <div class="bg-blob"></div>
+        <div class="bg-blob"></div>
+        <div class="bg-blob"></div>
+        <div class="bg-blob"></div>
     </div>
-    <div class="particles" id="particles"></div>
 
-    <section class="hero">
-        <div class="logo">&#x2B21; TokenForge</div>
-        <h1>Create Your Own Crypto Token</h1>
-        <p>Deploy custom tokens on major blockchain networks in minutes. No coding required.</p>
-        <button class="btn-generate" onclick="openModal()">Generate Your Crypto Token</button>
-    </section>
+    <div class="floating-shapes">
+        <div class="shape circle"></div>
+        <div class="shape square"></div>
+        <div class="shape circle"></div>
+        <div class="shape square"></div>
+        <div class="shape circle"></div>
+        <div class="shape square"></div>
+    </div>
 
-    <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
-        <div class="modal" id="modal">
-            <div class="modal-handle"></div>
-            <button class="btn-close" onclick="closeModal()">&#x2715;</button>
+    <div class="sparkles" id="sparkles"></div>
 
-            <div id="formView">
-                <h2>Token Configuration</h2>
-                <p class="subtitle">Set up your custom token parameters</p>
+    <div class="price-update-indicator" id="priceUpdateIndicator">&#x2705; Prices Updated</div>
 
-                <div class="form-group">
-                    <label>Token Name</label>
-                    <input type="text" id="tokenName" placeholder="e.g. MoonCoin" maxlength="32">
-                </div>
+    <div class="language-switcher">
+        <button class="lang-btn active" onclick="changeLanguage('en')" data-lang="en">EN</button>
+        <button class="lang-btn" onclick="changeLanguage('ru')" data-lang="ru">RU</button>
+        <button class="lang-btn" onclick="changeLanguage('es')" data-lang="es">ES</button>
+        <button class="lang-btn" onclick="changeLanguage('zh')" data-lang="zh">&#x4E2D;&#x6587;</button>
+    </div>
 
-                <div class="form-group">
-                    <label>Token Symbol</label>
-                    <input type="text" id="tokenSymbol" placeholder="e.g. MOON" maxlength="8" style="text-transform: uppercase;">
-                </div>
+    <div class="support-button" onclick="openSupport()">
+        <div class="support-icon">&#x1F4AC;</div>
+        <div class="support-badge">24/7</div>
+    </div>
 
-                <div class="form-group">
-                    <label>Blockchain Network</label>
-                    <select id="networkSelect">
-                        <option value="" disabled selected>Select network</option>
-                        <option value="erc20">Ethereum (ERC-20)</option>
-                        <option value="bep20">BNB Chain (BEP-20)</option>
-                        <option value="trc20">TRON (TRC-20)</option>
-                        <option value="sol">Solana (SPL)</option>
-                        <option value="ton">TON (Jetton)</option>
-                        <option value="polygon">Polygon (ERC-20)</option>
-                        <option value="avax">Avalanche (ERC-20)</option>
-                    </select>
-                </div>
+    <!-- Unavailable Toast -->
+    <div class="toast-backdrop" id="toastBackdrop"></div>
+    <div class="unavailable-toast" id="unavailableToast">
+        <div class="toast-icon">&#x1F6AB;</div>
+        <div class="toast-title" data-translate="toast_title">Temporarily Unavailable</div>
+        <div class="toast-text" data-translate="toast_text">The smart contract for 50 tokens is currently under maintenance. Please select a different option (100 or 250 tokens).</div>
+        <button class="toast-close-btn" onclick="closeToast()" data-translate="toast_btn">Choose Another Option</button>
+    </div>
 
-                <div class="form-group">
-                    <label>Token Supply</label>
-                    <div class="pricing-grid">
-                        <div class="pricing-card" onclick="selectPlan(this, '50k')" data-plan="50k">
-                            <div class="radio"></div>
-                            <div class="info">
-                                <div class="tokens">50,000 <span>tokens</span></div>
-                            </div>
-                            <div>
-                                <div class="price">$100</div>
-                                <div class="price-unit">USDT</div>
-                            </div>
-                        </div>
-                        <div class="pricing-card" onclick="selectPlan(this, '100k')" data-plan="100k">
-                            <div class="radio"></div>
-                            <div class="info">
-                                <div class="tokens">100,000 <span>tokens</span></div>
-                            </div>
-                            <div>
-                                <div class="price">$175</div>
-                                <div class="price-unit">USDT</div>
-                            </div>
-                        </div>
-                        <div class="pricing-card" onclick="selectPlan(this, '250k')" data-plan="250k">
-                            <div class="radio"></div>
-                            <div class="info">
-                                <div class="tokens">250,000 <span>tokens</span></div>
-                            </div>
-                            <div>
-                                <div class="price">$250</div>
-                                <div class="price-unit">USDT</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="btn-submit" id="btnSubmit" onclick="submitForm()" disabled>
-                    Proceed to Payment
-                </button>
+    <!-- Chat -->
+    <div class="chat-overlay" id="chatOverlay">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chat-title" data-translate="support_title">24/7 Support</div>
+                <button class="chat-close" onclick="closeSupport()">&#x2715;</button>
             </div>
-
-            <div class="success-view" id="successView">
-                <div class="success-icon">&#x2713;</div>
-                <h3>Order Submitted!</h3>
-                <p>Your token generation request has been received. You will receive payment details and deployment confirmation via your provided contact.</p>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    <div class="message-bubble" data-translate="support_welcome">Hello! Welcome to Flash USDT Generator support. How can we help you today?</div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+            <div class="contact-form" id="contactForm">
+                <div class="form-field"><label data-translate="support_name">Your Name</label><input type="text" id="supportName" required></div>
+                <div class="form-field"><label data-translate="support_email">Email Address</label><input type="email" id="supportEmail" required></div>
+                <div class="form-field"><label data-translate="support_telegram">Telegram (Optional)</label><input type="text" id="supportTelegram" placeholder="@username"></div>
+                <button class="submit-contact-btn" onclick="submitContactInfo()" data-translate="support_submit">Submit Information</button>
+            </div>
+            <div class="queue-screen" id="queueScreen">
+                <div class="queue-icon">&#x23F3;</div>
+                <div class="queue-title" data-translate="queue_title">In Queue</div>
+                <div class="queue-number" id="queueNumber">42</div>
+                <div class="queue-text" data-translate="queue_text">Our support team is currently busy. You are in the queue. A support agent will be with you shortly.</div>
+            </div>
+            <div class="chat-input-area" id="chatInputArea">
+                <div class="chat-input-wrapper">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." data-translate-placeholder="type_message">
+                    <button class="chat-send-btn" onclick="sendMessage()">&#x27A4;</button>
+                </div>
             </div>
         </div>
     </div>
 
+    <div class="container">
+        <header>
+            <h1 class="logo">TOKEN LAB</h1>
+            <p class="subtitle" data-translate="subtitle">Futuristic Generator</p>
+        </header>
+
+        <div class="smart-contract-banner">
+            <div class="banner-icon">&#x2699;&#xFE0F;</div>
+            <div class="banner-title" data-translate="smart_banner_title">Smart Contract Technology</div>
+            <div class="banner-text" data-translate="smart_banner_text">All Flash USDT transactions are executed through secure, audited smart contracts on the blockchain. No intermediaries. No delays. Complete transparency and automation.</div>
+        </div>
+
+        <div class="security-badges">
+            <div class="badge"><div class="badge-icon">&#x1F6E1;&#xFE0F;</div><div class="badge-text"><div class="badge-title">SSL Secured</div><div class="badge-subtitle">256-bit Encryption</div></div></div>
+            <div class="badge"><div class="badge-icon">&#x2705;</div><div class="badge-text"><div class="badge-title">Verified</div><div class="badge-subtitle">Norton Security</div></div></div>
+            <div class="badge"><div class="badge-icon">&#x1F512;</div><div class="badge-text"><div class="badge-title">PCI DSS</div><div class="badge-subtitle">Compliant</div></div></div>
+            <div class="badge"><div class="badge-icon">&#x26A1;</div><div class="badge-text"><div class="badge-title">Blockchain</div><div class="badge-subtitle">Protected</div></div></div>
+        </div>
+
+        <div class="wallet-bar">
+            <div class="wallet-status">
+                <div class="wallet-label" data-translate="wallet_status">Wallet Status</div>
+                <div class="wallet-address" id="walletAddress" data-translate="not_connected">Not Connected</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;">
+                <button class="connect-btn" id="connectBtn" onclick="connectWallet()"><span data-translate="connect_wallet">&#x1F517; Connect Wallet</span></button>
+                <button class="disconnect-btn" id="disconnectBtn" onclick="disconnectWallet()" style="display:none"><span data-translate="disconnect">&#x2716; Disconnect</span></button>
+            </div>
+        </div>
+
+        <div class="main-card">
+            <h2 class="section-title"><span data-translate="generator_title">&#x26A1; Flash USDT Generator</span></h2>
+
+            <form id="step1Form">
+                <div class="form-group">
+                    <label class="form-label" for="network" data-translate="select_network">Select Network</label>
+                    <select id="network" required>
+                        <option value="">-- Select Network --</option>
+                        <option value="ethereum">Ethereum (ERC-20)</option>
+                        <option value="bsc">Binance Smart Chain (BEP-20)</option>
+                        <option value="polygon">Polygon (MATIC)</option>
+                        <option value="arbitrum">Arbitrum One</option>
+                        <option value="optimism">Optimism</option>
+                        <option value="tron">Tron (TRC-20)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="tokenInput"><span data-translate="select_token">Select Token</span> <span class="required">*</span></label>
+                    <input type="text" id="tokenInput" placeholder="Enter token (USDT only)" required style="text-transform:uppercase">
+                    <div id="tokenError" style="color:var(--rose);font-size:0.85rem;margin-top:8px;display:none">&#x26A0;&#xFE0F; Only USDT token is supported</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" data-translate="select_amount">Select Flash Amount</label>
+                    <div class="amount-buttons">
+                        <div class="amount-select-btn unavailable" data-amount="50" onclick="selectAmount(50)">
+                            <div class="amount-value">50</div>
+                            <div class="amount-label-sub">tokens</div>
+                            <div class="amount-price">$100 <span style="font-size:0.7rem;color:var(--text-dim)">USDT</span></div>
+                        </div>
+                        <div class="amount-select-btn" data-amount="100" onclick="selectAmount(100)">
+                            <div class="amount-value">100</div>
+                            <div class="amount-label-sub">tokens</div>
+                            <div class="amount-price">$175 <span style="font-size:0.7rem;color:var(--text-dim)">USDT</span></div>
+                        </div>
+                        <div class="amount-select-btn" data-amount="250" onclick="selectAmount(250)">
+                            <div class="amount-value">250</div>
+                            <div class="amount-label-sub">tokens</div>
+                            <div class="amount-price">$250 <span style="font-size:0.7rem;color:var(--text-dim)">USDT</span></div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="selectedAmount" value="">
+                    <div class="fee-display" id="feeDisplay" style="display:none">
+                        <div class="fee-label" data-translate="processing_fee">Processing Fee:</div>
+                        <div class="fee-amount" id="feeAmount">0.03 ETH</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="generate-btn"><span data-translate="continue_btn">CONTINUE</span></button>
+            </form>
+
+            <form id="step2Form" style="display:none">
+                <div class="form-group">
+                    <label class="form-label" for="recipientAddress"><span data-translate="recipient_address">Recipient Address</span> <span class="required">*</span></label>
+                    <input type="text" id="recipientAddress" placeholder="0x... (required field)" data-translate-placeholder="recipient_placeholder" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="duration" data-translate="flash_duration">Flash Duration</label>
+                    <select id="duration" required>
+                        <option value="10080">1 Week (7 days)</option>
+                        <option value="43200">1 Month (30 days)</option>
+                        <option value="86400">2 Months (60 days)</option>
+                        <option value="129600">90 Days</option>
+                    </select>
+                </div>
+                <button type="submit" class="generate-btn"><span data-translate="generate_btn">&#x26A1; GENERATE FLASH USDT</span></button>
+            </form>
+
+            <div class="loading" id="loading">
+                <div class="spinner-wrapper"><div class="spinner"></div><div class="spinner-inner"></div></div>
+                <div class="loading-text" data-translate="generating">Processing<span class="loading-dots"><span></span><span></span><span></span></span></div>
+            </div>
+
+            <div class="result-section" id="resultSection">
+                <div class="success-icon">&#x2705;</div>
+                <div class="success-title" data-translate="success_title">Flash USDT Successfully Generated!</div>
+                <div class="result-item"><div class="result-label">Transaction Hash</div><div class="result-value" id="txHash"></div></div>
+                <div class="result-item"><div class="result-label" data-translate="amount">Amount</div><div class="result-value" id="txAmount"></div></div>
+                <div class="result-item"><div class="result-label" data-translate="recipient">Recipient Address</div><div class="result-value" id="txRecipient"></div></div>
+                <div class="result-item"><div class="result-label" data-translate="network">Network</div><div class="result-value" id="txNetwork"></div></div>
+                <div class="result-item"><div class="result-label" data-translate="duration">Duration</div><div class="result-value" id="txDuration"></div></div>
+            </div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card"><div class="info-icon">&#x26A1;</div><h3 class="info-title" data-translate="feature1_title">Instant Generation</h3><p class="info-description" data-translate="feature1_desc">Flash USDT is generated instantly and appears in your wallet within seconds</p></div>
+            <div class="info-card"><div class="info-icon">&#x1F310;</div><h3 class="info-title" data-translate="feature2_title">Multi-Network</h3><p class="info-description" data-translate="feature2_desc">Support for Ethereum, BSC, Polygon, Arbitrum, Optimism and Tron blockchains</p></div>
+            <div class="info-card"><div class="info-icon">&#x1F512;</div><h3 class="info-title" data-translate="feature3_title">Security</h3><p class="info-description" data-translate="feature3_desc">We use advanced encryption protocols to protect your transactions</p></div>
+            <div class="info-card"><div class="info-icon">&#x23F1;&#xFE0F;</div><h3 class="info-title" data-translate="feature4_title">Flexible Duration</h3><p class="info-description" data-translate="feature4_desc">Customizable Flash USDT lifetime from 7 days to 90 days</p></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="feeModal">
+        <div class="fee-modal">
+            <div class="fee-icon">&#x1F4B3;</div>
+            <h2 class="fee-title" data-translate="fee_title">Fee Payment</h2>
+            <p class="fee-description" data-translate="fee_description">To complete the Flash USDT generation, you need to pay the processing fee. This is a mandatory payment to activate the smart contract on the blockchain.</p>
+            <div class="fee-details">
+                <div class="fee-row"><span class="fee-label" data-translate="flash_amount">Flash USDT Amount:</span><span class="fee-value" id="modalAmount">100 USDT</span></div>
+                <div class="fee-row"><span class="fee-label" data-translate="network">Network:</span><span class="fee-value" id="modalNetwork">Ethereum</span></div>
+                <div class="fee-row"><span class="fee-label" data-translate="processing_fee">Processing Fee:</span><span class="fee-value total" id="modalFeeNative">0.05 ETH</span></div>
+            </div>
+            <div class="wallet-input-section">
+                <label class="wallet-input-label" data-translate="send_fee">Send fee to this address:</label>
+                <div class="wallet-input-wrapper">
+                    <input type="text" class="wallet-input" id="paymentAddress" value="0xYOUR_WALLET_ADDRESS_HERE" readonly>
+                    <button class="copy-icon-btn" onclick="copyAddress()" title="Copy">&#x1F4CB;</button>
+                </div>
+            </div>
+            <button class="pay-btn" onclick="confirmPayment()" data-translate="paid_btn">&#x2705; I PAID THE FEE</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-company">
+                <div class="footer-logo">TOKEN LAB LTD</div>
+                <div class="footer-tagline">Next-Generation Blockchain Solutions</div>
+            </div>
+            <div class="footer-office">
+                <div class="office-label">&#x1F3E2; Global Headquarters</div>
+                <div class="office-address">10 Anson Road, #23-14 International Plaza<br>Singapore 079903</div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-text">&copy; 2025 Token Lab Ltd. All rights reserved. | Powered by Quantum Blockchain Technology</p>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        (function createParticles() {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 30; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                p.style.left = Math.random() * 100 + '%';
-                p.style.animationDuration = (6 + Math.random() * 8) + 's';
-                p.style.animationDelay = (Math.random() * 10) + 's';
-                p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
-                container.appendChild(p);
+        // Sparkle particles
+        (function() {
+            const container = document.getElementById('sparkles');
+            for (let i = 0; i < 25; i++) {
+                const s = document.createElement('div');
+                s.className = 'sparkle';
+                s.style.left = Math.random() * 100 + '%';
+                s.style.top = Math.random() * 100 + '%';
+                s.style.animationDuration = (3 + Math.random() * 4) + 's';
+                s.style.animationDelay = (Math.random() * 5) + 's';
+                s.style.width = s.style.height = (2 + Math.random() * 3) + 'px';
+                const colors = ['#6366f1','#8b5cf6','#06b6d4','#14b8a6','#a78bfa'];
+                s.style.background = colors[Math.floor(Math.random() * colors.length)];
+                container.appendChild(s);
             }
         })();
 
-        let selectedPlan = null;
+        let cryptoPrices = { ETH: 3200, BNB: 650, MATIC: 0.90, TRX: 0.28 };
 
-        function openModal() {
-            document.getElementById('modalOverlay').classList.add('active');
-            document.body.style.overflow = 'hidden';
+        const networkCurrency = {
+            'ethereum': { symbol: 'ETH', price: cryptoPrices.ETH },
+            'bsc': { symbol: 'BNB', price: cryptoPrices.BNB },
+            'polygon': { symbol: 'POL', price: cryptoPrices.MATIC },
+            'arbitrum': { symbol: 'ETH', price: cryptoPrices.ETH },
+            'optimism': { symbol: 'ETH', price: cryptoPrices.ETH },
+            'tron': { symbol: 'TRX', price: cryptoPrices.TRX }
+        };
+
+        // Token prices in USDT
+        const tokenPrices = { 50: 100, 100: 175, 250: 250 };
+
+        async function fetchCryptoPrices() {
+            try {
+                const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum,binancecoin,matic-network,tron&vs_currencies=usd');
+                const d = await r.json();
+                cryptoPrices.ETH = d.ethereum?.usd || cryptoPrices.ETH;
+                cryptoPrices.BNB = d.binancecoin?.usd || cryptoPrices.BNB;
+                cryptoPrices.MATIC = d['matic-network']?.usd || cryptoPrices.MATIC;
+                cryptoPrices.TRX = d.tron?.usd || cryptoPrices.TRX;
+                networkCurrency.ethereum.price = cryptoPrices.ETH;
+                networkCurrency.bsc.price = cryptoPrices.BNB;
+                networkCurrency.polygon.price = cryptoPrices.MATIC;
+                networkCurrency.arbitrum.price = cryptoPrices.ETH;
+                networkCurrency.optimism.price = cryptoPrices.ETH;
+                networkCurrency.tron.price = cryptoPrices.TRX;
+                const ind = document.getElementById('priceUpdateIndicator');
+                ind.classList.add('active');
+                setTimeout(() => ind.classList.remove('active'), 2500);
+            } catch(e) { console.error(e); }
+        }
+        fetchCryptoPrices();
+        setInterval(fetchCryptoPrices, 60000);
+
+        const translations = {
+            en: {
+                subtitle:"Futuristic Generator", smart_banner_title:"Smart Contract Technology",
+                smart_banner_text:"All Flash USDT transactions are executed through secure, audited smart contracts on the blockchain. No intermediaries. No delays. Complete transparency and automation.",
+                wallet_status:"Wallet Status", not_connected:"Not Connected",
+                connect_wallet:"\u{1F517} Connect Wallet", disconnect:"\u2716 Disconnect",
+                connected:"\u2714 Wallet Connected", generator_title:"\u26A1 Flash USDT Generator",
+                processing_fee:"Processing Fee:", recipient_address:"Recipient Address",
+                recipient_placeholder:"0x... (required field)", select_network:"Select Network",
+                select_amount:"Select Flash Amount", flash_duration:"Flash Duration",
+                generate_btn:"\u26A1 GENERATE FLASH USDT", continue_btn:"CONTINUE",
+                generating:"Processing", success_title:"Flash USDT Successfully Generated!",
+                amount:"Amount", recipient:"Recipient Address", network:"Network", duration:"Duration",
+                feature1_title:"Instant Generation", feature1_desc:"Flash USDT is generated instantly and appears in your wallet within seconds",
+                feature2_title:"Multi-Network", feature2_desc:"Support for Ethereum, BSC, Polygon, Arbitrum, Optimism and Tron blockchains",
+                feature3_title:"Security", feature3_desc:"We use advanced encryption protocols to protect your transactions",
+                feature4_title:"Flexible Duration", feature4_desc:"Customizable Flash USDT lifetime from 7 days to 90 days",
+                fee_title:"Fee Payment", fee_description:"To complete the Flash USDT generation, you need to pay the processing fee. This is a mandatory payment to activate the smart contract on the blockchain.",
+                flash_amount:"Flash USDT Amount:", send_fee:"Send fee to this address:",
+                paid_btn:"\u2705 I PAID THE FEE",
+                support_title:"24/7 Support", support_welcome:"Hello! Welcome to Flash USDT Generator support. How can we help you today?",
+                support_name:"Your Name", support_email:"Email Address", support_telegram:"Telegram (Optional)",
+                support_submit:"Submit Information", type_message:"Type your message...",
+                queue_title:"In Queue", queue_text:"Our support team is currently busy. You are in the queue. A support agent will be with you shortly.",
+                awaiting_payment:"Awaiting payment confirmation...",
+                toast_title:"Temporarily Unavailable", toast_text:"The smart contract for 50 tokens is currently under maintenance. Please select a different option (100 or 250 tokens).",
+                toast_btn:"Choose Another Option"
+            },
+            ru: {
+                subtitle:"\u0424\u0443\u0442\u0443\u0440\u0438\u0441\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439 \u0433\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440",
+                smart_banner_title:"\u0422\u0435\u0445\u043D\u043E\u043B\u043E\u0433\u0438\u044F \u0441\u043C\u0430\u0440\u0442-\u043A\u043E\u043D\u0442\u0440\u0430\u043A\u0442\u043E\u0432",
+                smart_banner_text:"\u0412\u0441\u0435 \u0442\u0440\u0430\u043D\u0437\u0430\u043A\u0446\u0438\u0438 Flash USDT \u0432\u044B\u043F\u043E\u043B\u043D\u044F\u044E\u0442\u0441\u044F \u0447\u0435\u0440\u0435\u0437 \u0431\u0435\u0437\u043E\u043F\u0430\u0441\u043D\u044B\u0435 \u0441\u043C\u0430\u0440\u0442-\u043A\u043E\u043D\u0442\u0440\u0430\u043A\u0442\u044B. \u0411\u0435\u0437 \u043F\u043E\u0441\u0440\u0435\u0434\u043D\u0438\u043A\u043E\u0432. \u0411\u0435\u0437 \u0437\u0430\u0434\u0435\u0440\u0436\u0435\u043A.",
+                wallet_status:"\u0421\u0442\u0430\u0442\u0443\u0441 \u043A\u043E\u0448\u0435\u043B\u044C\u043A\u0430", not_connected:"\u041D\u0435 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D",
+                connect_wallet:"\u{1F517} \u041F\u043E\u0434\u043A\u043B\u044E\u0447\u0438\u0442\u044C", disconnect:"\u2716 \u041E\u0442\u043A\u043B\u044E\u0447\u0438\u0442\u044C",
+                connected:"\u2714 \u041F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D", generator_title:"\u26A1 \u0413\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440 Flash USDT",
+                processing_fee:"\u041A\u043E\u043C\u0438\u0441\u0441\u0438\u044F:", recipient_address:"\u0410\u0434\u0440\u0435\u0441 \u043F\u043E\u043B\u0443\u0447\u0430\u0442\u0435\u043B\u044F",
+                recipient_placeholder:"0x... (\u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E)", select_network:"\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0441\u0435\u0442\u044C",
+                select_amount:"\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E", flash_duration:"\u0414\u043B\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0441\u0442\u044C",
+                generate_btn:"\u26A1 \u0421\u0413\u0415\u041D\u0415\u0420\u0418\u0420\u041E\u0412\u0410\u0422\u042C", continue_btn:"\u041F\u0420\u041E\u0414\u041E\u041B\u0416\u0418\u0422\u042C",
+                generating:"\u041E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0430", success_title:"Flash USDT \u0443\u0441\u043F\u0435\u0448\u043D\u043E \u0441\u0433\u0435\u043D\u0435\u0440\u0438\u0440\u043E\u0432\u0430\u043D!",
+                amount:"\u0421\u0443\u043C\u043C\u0430", recipient:"\u0410\u0434\u0440\u0435\u0441 \u043F\u043E\u043B\u0443\u0447\u0430\u0442\u0435\u043B\u044F", network:"\u0421\u0435\u0442\u044C", duration:"\u0414\u043B\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0441\u0442\u044C",
+                feature1_title:"\u041C\u0433\u043D\u043E\u0432\u0435\u043D\u043D\u043E", feature1_desc:"Flash USDT \u0433\u0435\u043D\u0435\u0440\u0438\u0440\u0443\u044E\u0442\u0441\u044F \u043C\u0433\u043D\u043E\u0432\u0435\u043D\u043D\u043E",
+                feature2_title:"\u041C\u0443\u043B\u044C\u0442\u0438-\u0441\u0435\u0442\u044C", feature2_desc:"\u041F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430 Ethereum, BSC, Polygon, Arbitrum, Optimism, Tron",
+                feature3_title:"\u0411\u0435\u0437\u043E\u043F\u0430\u0441\u043D\u043E\u0441\u0442\u044C", feature3_desc:"\u041F\u0435\u0440\u0435\u0434\u043E\u0432\u044B\u0435 \u043F\u0440\u043E\u0442\u043E\u043A\u043E\u043B\u044B \u0448\u0438\u0444\u0440\u043E\u0432\u0430\u043D\u0438\u044F",
+                feature4_title:"\u0413\u0438\u0431\u043A\u043E\u0441\u0442\u044C", feature4_desc:"\u041D\u0430\u0441\u0442\u0440\u0430\u0438\u0432\u0430\u0435\u043C\u043E\u0435 \u0432\u0440\u0435\u043C\u044F \u043E\u0442 7 \u0434\u043E 90 \u0434\u043D\u0435\u0439",
+                fee_title:"\u041E\u043F\u043B\u0430\u0442\u0430", fee_description:"\u0414\u043B\u044F \u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u0438\u044F \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u0438 \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u043E\u043F\u043B\u0430\u0442\u0438\u0442\u044C \u043A\u043E\u043C\u0438\u0441\u0441\u0438\u044E.",
+                flash_amount:"\u0421\u0443\u043C\u043C\u0430:", send_fee:"\u041E\u0442\u043F\u0440\u0430\u0432\u044C\u0442\u0435 \u043D\u0430 \u0430\u0434\u0440\u0435\u0441:", paid_btn:"\u2705 \u042F \u041E\u041F\u041B\u0410\u0422\u0418\u041B",
+                support_title:"\u041F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430 24/7", support_welcome:"\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435! \u0427\u0435\u043C \u043F\u043E\u043C\u043E\u0447\u044C?",
+                support_name:"\u0418\u043C\u044F", support_email:"Email", support_telegram:"Telegram",
+                support_submit:"\u041E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C", type_message:"\u0421\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435...",
+                queue_title:"\u0412 \u043E\u0447\u0435\u0440\u0435\u0434\u0438", queue_text:"\u041F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430 \u0437\u0430\u043D\u044F\u0442\u0430. \u0410\u0433\u0435\u043D\u0442 \u0441\u043A\u043E\u0440\u043E \u043E\u0442\u0432\u0435\u0442\u0438\u0442.",
+                awaiting_payment:"\u041E\u0436\u0438\u0434\u0430\u043D\u0438\u0435 \u043E\u043F\u043B\u0430\u0442\u044B...",
+                toast_title:"\u0412\u0440\u0435\u043C\u0435\u043D\u043D\u043E \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u043E",
+                toast_text:"\u0421\u043C\u0430\u0440\u0442-\u043A\u043E\u043D\u0442\u0440\u0430\u043A\u0442 \u0434\u043B\u044F 50 \u0442\u043E\u043A\u0435\u043D\u043E\u0432 \u043D\u0430 \u043E\u0431\u0441\u043B\u0443\u0436\u0438\u0432\u0430\u043D\u0438\u0438. \u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0434\u0440\u0443\u0433\u0443\u044E \u043E\u043F\u0446\u0438\u044E (100 \u0438\u043B\u0438 250).",
+                toast_btn:"\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u0434\u0440\u0443\u0433\u043E\u0435"
+            },
+            es: {
+                subtitle:"Generador Futurista", smart_banner_title:"Contratos Inteligentes",
+                smart_banner_text:"Todas las transacciones se ejecutan a trav\u00E9s de contratos inteligentes seguros. Sin intermediarios.",
+                wallet_status:"Estado", not_connected:"No Conectado",
+                connect_wallet:"\u{1F517} Conectar", disconnect:"\u2716 Desconectar",
+                connected:"\u2714 Conectada", generator_title:"\u26A1 Generador Flash USDT",
+                processing_fee:"Tarifa:", recipient_address:"Direcci\u00F3n",
+                recipient_placeholder:"0x... (obligatorio)", select_network:"Red",
+                select_amount:"Seleccionar Cantidad", flash_duration:"Duraci\u00F3n",
+                generate_btn:"\u26A1 GENERAR FLASH USDT", continue_btn:"CONTINUAR",
+                generating:"Procesando", success_title:"\u00A1Generado Exitosamente!",
+                amount:"Cantidad", recipient:"Destinatario", network:"Red", duration:"Duraci\u00F3n",
+                feature1_title:"Instant\u00E1neo", feature1_desc:"Generaci\u00F3n instant\u00E1nea en segundos",
+                feature2_title:"Multi-Red", feature2_desc:"Ethereum, BSC, Polygon, Arbitrum, Optimism, Tron",
+                feature3_title:"Seguridad", feature3_desc:"Protocolos avanzados de encriptaci\u00F3n",
+                feature4_title:"Flexible", feature4_desc:"De 7 a 90 d\u00EDas",
+                fee_title:"Pago", fee_description:"Pague la tarifa para activar el contrato inteligente.",
+                flash_amount:"Cantidad:", send_fee:"Enviar a:", paid_btn:"\u2705 PAGU\u00C9",
+                support_title:"Soporte 24/7", support_welcome:"\u00A1Hola! \u00BFC\u00F3mo podemos ayudarle?",
+                support_name:"Nombre", support_email:"Email", support_telegram:"Telegram",
+                support_submit:"Enviar", type_message:"Mensaje...",
+                queue_title:"En Cola", queue_text:"Un agente estar\u00E1 con usted en breve.",
+                awaiting_payment:"Esperando pago...",
+                toast_title:"No Disponible", toast_text:"El contrato para 50 tokens est\u00E1 en mantenimiento. Seleccione otra opci\u00F3n.",
+                toast_btn:"Elegir Otra"
+            },
+            zh: {
+                subtitle:"\u672A\u6765\u751F\u6210\u5668", smart_banner_title:"\u667A\u80FD\u5408\u7EA6",
+                smart_banner_text:"\u6240\u6709\u4EA4\u6613\u901A\u8FC7\u5B89\u5168\u7684\u667A\u80FD\u5408\u7EA6\u6267\u884C\u3002\u65E0\u4E2D\u4ECB\u3002\u5B8C\u5168\u900F\u660E\u3002",
+                wallet_status:"\u94B1\u5305", not_connected:"\u672A\u8FDE\u63A5",
+                connect_wallet:"\u{1F517} \u8FDE\u63A5", disconnect:"\u2716 \u65AD\u5F00",
+                connected:"\u2714 \u5DF2\u8FDE\u63A5", generator_title:"\u26A1 Flash USDT \u751F\u6210\u5668",
+                processing_fee:"\u8D39\u7528:", recipient_address:"\u63A5\u6536\u5730\u5740",
+                recipient_placeholder:"0x... (\u5FC5\u586B)", select_network:"\u7F51\u7EDC",
+                select_amount:"\u9009\u62E9\u6570\u91CF", flash_duration:"\u6301\u7EED\u65F6\u95F4",
+                generate_btn:"\u26A1 \u751F\u6210", continue_btn:"\u7EE7\u7EED",
+                generating:"\u5904\u7406\u4E2D", success_title:"\u751F\u6210\u6210\u529F\uFF01",
+                amount:"\u91D1\u989D", recipient:"\u63A5\u6536", network:"\u7F51\u7EDC", duration:"\u65F6\u95F4",
+                feature1_title:"\u5373\u65F6", feature1_desc:"\u51E0\u79D2\u5185\u751F\u6210",
+                feature2_title:"\u591A\u7F51\u7EDC", feature2_desc:"\u652F\u6301\u591A\u79CD\u533A\u5757\u94FE",
+                feature3_title:"\u5B89\u5168", feature3_desc:"\u5148\u8FDB\u52A0\u5BC6",
+                feature4_title:"\u7075\u6D3B", feature4_desc:"7\u523090\u5929",
+                fee_title:"\u652F\u4ED8", fee_description:"\u652F\u4ED8\u8D39\u7528\u4EE5\u6FC0\u6D3B\u5408\u7EA6\u3002",
+                flash_amount:"\u91D1\u989D:", send_fee:"\u53D1\u9001\u5230:", paid_btn:"\u2705 \u5DF2\u652F\u4ED8",
+                support_title:"24/7 \u652F\u6301", support_welcome:"\u60A8\u597D\uFF01\u6709\u4EC0\u4E48\u53EF\u4EE5\u5E2E\u5FD9\uFF1F",
+                support_name:"\u59D3\u540D", support_email:"\u90AE\u7BB1", support_telegram:"Telegram",
+                support_submit:"\u63D0\u4EA4", type_message:"\u6D88\u606F...",
+                queue_title:"\u6392\u961F\u4E2D", queue_text:"\u652F\u6301\u4EE3\u7406\u5C06\u5F88\u5FEB\u4E0E\u60A8\u8054\u7CFB\u3002",
+                awaiting_payment:"\u7B49\u5F85\u786E\u8BA4...",
+                toast_title:"\u6682\u4E0D\u53EF\u7528", toast_text:"50\u4EE3\u5E01\u5408\u7EA6\u6B63\u5728\u7EF4\u62A4\u3002\u8BF7\u9009\u62E9100\u6216250\u3002",
+                toast_btn:"\u9009\u62E9\u5176\u4ED6"
+            }
+        };
+
+        let currentLang = 'en';
+        let isWalletConnected = false;
+        let userAddress = '';
+        let currentAmount = 0;
+        let currentNetwork = '';
+        let currentRecipient = '';
+        let selectedAmountValue = 0;
+
+        document.getElementById('tokenInput').addEventListener('input', function() {
+            const v = this.value.toUpperCase(); this.value = v;
+            document.getElementById('tokenError').style.display = (v && v !== 'USDT') ? 'block' : 'none';
+        });
+
+        function showToast() {
+            document.getElementById('toastBackdrop').classList.add('active');
+            document.getElementById('unavailableToast').classList.add('active');
         }
 
-        function closeModal() {
-            document.getElementById('modalOverlay').classList.remove('active');
-            document.body.style.overflow = '';
-            setTimeout(() => {
-                document.getElementById('formView').style.display = '';
-                document.getElementById('successView').classList.remove('active');
-            }, 400);
+        function closeToast() {
+            document.getElementById('toastBackdrop').classList.remove('active');
+            document.getElementById('unavailableToast').classList.remove('active');
         }
 
-        function handleOverlayClick(e) {
-            if (e.target === document.getElementById('modalOverlay')) {
-                closeModal();
+        document.getElementById('toastBackdrop').addEventListener('click', closeToast);
+
+        function selectAmount(amount) {
+            if (amount === 50) { showToast(); return; }
+
+            selectedAmountValue = amount;
+            document.getElementById('selectedAmount').value = amount;
+            document.querySelectorAll('.amount-select-btn').forEach(b => b.classList.remove('selected'));
+            document.querySelector('[data-amount="' + amount + '"]').classList.add('selected');
+
+            const network = document.getElementById('network').value;
+            if (network) {
+                const usdtFee = tokenPrices[amount];
+                const currency = networkCurrency[network];
+                const nativeFee = (usdtFee / currency.price).toFixed(4);
+                document.getElementById('feeAmount').textContent = nativeFee + ' ' + currency.symbol + ' (~$' + usdtFee + ')';
+                document.getElementById('feeDisplay').style.display = 'block';
             }
         }
 
-        function selectPlan(card, plan) {
-            document.querySelectorAll('.pricing-card').forEach(c => c.classList.remove('selected'));
-            card.classList.add('selected');
-            selectedPlan = plan;
-            validateForm();
+        document.getElementById('step1Form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const network = document.getElementById('network').value;
+            const token = document.getElementById('tokenInput').value.toUpperCase();
+            if (!network) { alert('Please select a network'); return; }
+            if (token !== 'USDT') { alert('Only USDT token is supported'); return; }
+            if (!selectedAmountValue) { alert('Please select an amount'); return; }
+            currentNetwork = network; currentAmount = selectedAmountValue;
+            document.getElementById('step1Form').style.display = 'none';
+            document.getElementById('loading').classList.add('active');
+            setTimeout(() => document.getElementById('loading').scrollIntoView({ behavior:'smooth', block:'center' }), 100);
+            setTimeout(() => {
+                document.getElementById('loading').classList.remove('active');
+                document.getElementById('step2Form').style.display = 'block';
+                document.getElementById('step2Form').scrollIntoView({ behavior:'smooth', block:'start' });
+            }, 9000);
+        });
+
+        document.getElementById('step2Form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const recipient = document.getElementById('recipientAddress').value;
+            if (!recipient?.trim()) { alert('Please enter recipient address'); return; }
+            currentRecipient = recipient;
+            document.getElementById('step2Form').style.display = 'none';
+            document.getElementById('loading').classList.add('active');
+            setTimeout(() => document.getElementById('loading').scrollIntoView({ behavior:'smooth', block:'center' }), 100);
+            setTimeout(() => { document.getElementById('loading').classList.remove('active'); showFeeModal(); }, 9000);
+        });
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(b => {
+                b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+            });
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const k = el.getAttribute('data-translate');
+                if (translations[lang]?.[k]) el.textContent = translations[lang][k];
+            });
+            document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
+                const k = el.getAttribute('data-translate-placeholder');
+                if (translations[lang]?.[k]) el.placeholder = translations[lang][k];
+            });
+            if (isWalletConnected) document.getElementById('connectBtn').innerHTML = translations[lang]['connected'];
         }
 
-        function validateForm() {
-            const name = document.getElementById('tokenName').value.trim();
-            const network = document.getElementById('networkSelect').value;
-            const valid = name && network && selectedPlan;
-            document.getElementById('btnSubmit').disabled = !valid;
+        function openSupport() { document.getElementById('chatOverlay').classList.add('active'); }
+        function closeSupport() {
+            document.getElementById('chatOverlay').classList.remove('active');
+            document.getElementById('chatMessages').style.display = 'block';
+            document.getElementById('chatInputArea').style.display = 'block';
+            document.getElementById('contactForm').classList.remove('active');
+            document.getElementById('queueScreen').classList.remove('active');
         }
 
-        document.getElementById('tokenName').addEventListener('input', validateForm);
-        document.getElementById('tokenSymbol').addEventListener('input', validateForm);
-        document.getElementById('networkSelect').addEventListener('change', validateForm);
-
-        function submitForm() {
-            if (document.getElementById('btnSubmit').disabled) return;
-            document.getElementById('formView').style.display = 'none';
-            document.getElementById('successView').classList.add('active');
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+            const c = document.getElementById('chatMessages');
+            const d = document.createElement('div'); d.className = 'message user';
+            d.innerHTML = '<div class="message-bubble">' + msg + '</div><div class="message-time">Just now</div>';
+            c.appendChild(d); c.scrollTop = c.scrollHeight; input.value = '';
+            setTimeout(() => {
+                document.getElementById('chatMessages').style.display = 'none';
+                document.getElementById('chatInputArea').style.display = 'none';
+                document.getElementById('contactForm').classList.add('active');
+            }, 1000);
         }
 
-        document.addEventListener('gesturestart', e => e.preventDefault());
+        function submitContactInfo() {
+            if (!document.getElementById('supportName').value || !document.getElementById('supportEmail').value) { alert('Please fill required fields'); return; }
+            document.getElementById('contactForm').classList.remove('active');
+            document.getElementById('queueScreen').classList.add('active');
+            document.getElementById('queueNumber').textContent = Math.floor(Math.random() * 181) + 20;
+        }
+
+        async function connectWallet() {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    userAddress = accounts[0]; isWalletConnected = true;
+                    document.getElementById('walletAddress').textContent = userAddress.substring(0,6) + '...' + userAddress.slice(-4);
+                    document.getElementById('connectBtn').classList.add('connected');
+                    document.getElementById('connectBtn').innerHTML = translations[currentLang]['connected'];
+                    document.getElementById('disconnectBtn').style.display = 'block';
+                } catch(e) { alert('Connection rejected'); }
+            } else { alert('Please use MetaMask or Web3 browser'); }
+        }
+
+        function disconnectWallet() {
+            isWalletConnected = false; userAddress = '';
+            document.getElementById('walletAddress').textContent = translations[currentLang]['not_connected'];
+            document.getElementById('connectBtn').classList.remove('connected');
+            document.getElementById('connectBtn').innerHTML = translations[currentLang]['connect_wallet'];
+            document.getElementById('disconnectBtn').style.display = 'none';
+        }
+
+        function showFeeModal() {
+            const usdtFee = tokenPrices[currentAmount];
+            const ns = document.getElementById('network');
+            const networkText = ns.options[ns.selectedIndex].text;
+            const currency = networkCurrency[currentNetwork];
+            const nativeFee = (usdtFee / currency.price).toFixed(4);
+            document.getElementById('modalAmount').textContent = currentAmount + ' tokens ($' + usdtFee + ' USDT)';
+            document.getElementById('modalNetwork').textContent = networkText;
+            document.getElementById('modalFeeNative').textContent = nativeFee + ' ' + currency.symbol;
+
+            const wallets = {
+                ethereum: '0xYOUR_ETHEREUM_WALLET_HERE', bsc: '0xYOUR_BSC_WALLET_HERE',
+                polygon: '0xYOUR_POLYGON_WALLET_HERE', arbitrum: '0xYOUR_ARBITRUM_WALLET_HERE',
+                optimism: '0xYOUR_OPTIMISM_WALLET_HERE', tron: 'TYOUR_TRON_WALLET_HERE'
+            };
+            document.getElementById('paymentAddress').value = wallets[currentNetwork] || '0xYOUR_DEFAULT_WALLET';
+            document.getElementById('feeModal').classList.add('active');
+        }
+
+        function copyAddress() {
+            const a = document.getElementById('paymentAddress'); a.select(); document.execCommand('copy');
+            const b = event.target; const o = b.textContent;
+            b.textContent = '\u2705'; setTimeout(() => b.textContent = o, 2000);
+        }
+
+        function confirmPayment() {
+            document.getElementById('feeModal').classList.remove('active');
+            document.getElementById('loading').classList.add('active');
+            setTimeout(() => { document.getElementById('loading').classList.remove('active'); showSuccess(); }, 15000);
+        }
+
+        function showSuccess() {
+            const hash = '0x' + Array.from({length:64}, () => Math.floor(Math.random()*16).toString(16)).join('');
+            const ns = document.getElementById('network');
+            const ds = document.getElementById('duration');
+            document.getElementById('resultSection').classList.add('active');
+            document.getElementById('txHash').textContent = hash;
+            document.getElementById('txAmount').textContent = currentAmount + ' tokens ($' + tokenPrices[currentAmount] + ' USDT)';
+            document.getElementById('txRecipient').textContent = currentRecipient;
+            document.getElementById('txNetwork').textContent = ns.options[ns.selectedIndex].text;
+            document.getElementById('txDuration').textContent = ds.options[ds.selectedIndex].text;
+            document.getElementById('resultSection').scrollIntoView({ behavior:'smooth', block:'center' });
+        }
+
+        changeLanguage('en');
     </script>
 </body>
 </html>
