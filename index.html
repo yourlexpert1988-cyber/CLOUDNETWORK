@@ -109,6 +109,54 @@ background-clip:text;letter-spacing:-.5px;
 }
 .brand-sub{font-size:.85rem;color:var(--t4);letter-spacing:3px;text-transform:uppercase;font-weight:500}
 
+/* === CONNECT WALLET === */
+.wallet-btn{
+display:inline-flex;align-items:center;gap:8px;
+margin-top:14px;padding:12px 24px;
+background:linear-gradient(135deg,var(--p),var(--b));
+border:none;border-radius:14px;color:#fff;
+font-family:inherit;font-size:.82rem;font-weight:700;
+cursor:pointer;transition:all .3s;
+box-shadow:0 4px 16px rgba(124,58,237,.25);
+letter-spacing:.3px;
+}
+.wallet-btn:active{transform:scale(.96)}
+.wallet-btn svg{width:18px;height:18px;flex-shrink:0}
+.wallet-btn.connected{
+background:linear-gradient(135deg,var(--g),var(--g2));
+box-shadow:0 4px 16px rgba(5,150,105,.2);
+cursor:default;
+}
+.wallet-modal-bg{
+position:fixed;inset:0;background:rgba(15,23,42,.4);
+backdrop-filter:blur(10px);z-index:8000;display:none;
+align-items:center;justify-content:center;padding:16px;
+}
+.wallet-modal-bg.active{display:flex;animation:fadeIn .2s ease}
+.wallet-modal{
+background:var(--card);border-radius:22px;padding:28px 22px;
+max-width:400px;width:100%;
+box-shadow:var(--sh3);animation:modalPop .4s cubic-bezier(.16,1,.3,1);
+}
+.wallet-modal-title{font-size:1.05rem;font-weight:800;text-align:center;color:var(--t1);margin-bottom:6px}
+.wallet-modal-desc{font-size:.78rem;color:var(--t3);text-align:center;margin-bottom:18px}
+.wallet-option{
+display:flex;align-items:center;gap:12px;
+padding:14px 16px;background:var(--bg);
+border:1.5px solid var(--brd);border-radius:14px;
+cursor:pointer;transition:all .3s;margin-bottom:8px;
+}
+.wallet-option:active{transform:scale(.97);border-color:var(--p)}
+.wallet-option:last-child{margin-bottom:0}
+.wallet-option svg{width:28px;height:28px;flex-shrink:0}
+.wallet-option-name{font-size:.85rem;font-weight:700;color:var(--t1)}
+.wallet-option-sub{font-size:.65rem;color:var(--t4)}
+.wallet-connecting{
+display:none;text-align:center;padding:20px 0;
+}
+.wallet-connecting.active{display:block;animation:fadeIn .3s}
+.wallet-connecting .loader{width:36px;height:36px;margin:0 auto 12px;border-width:2.5px}
+
 @keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
 
 /* === HERO === */
@@ -899,6 +947,40 @@ display:flex;align-items:center;justify-content:center;
 </div>
 </div>
 
+<!-- Wallet Connect Modal -->
+<div class="wallet-modal-bg" id="walletModalBg" onclick="if(event.target===this)closeWalletModal()">
+<div class="wallet-modal">
+<div id="walletOptions">
+<div class="wallet-modal-title">Connect Wallet</div>
+<div class="wallet-modal-desc">Select your preferred wallet to continue</div>
+<div class="wallet-option" onclick="connectWallet('MetaMask')">
+<svg viewBox="0 0 28 28" fill="none"><path d="M25 4L15.5 11l1.8-4.2L25 4z" fill="#E17726" stroke="#E17726" stroke-width=".3"/><path d="M3 4l9.4 7.1L10.7 6.8 3 4z" fill="#E27625" stroke="#E27625" stroke-width=".3"/><path d="M21.5 19.5l-2.5 3.8 5.4 1.5 1.5-5.2-4.4-.1zM2.1 19.6l1.5 5.2 5.4-1.5-2.5-3.8-4.4.1z" fill="#E27625" stroke="#E27625" stroke-width=".3"/><path d="M8.7 12.3L7.2 14.5l5.3.2-.2-5.7-3.6 3.3zM19.3 12.3l-3.7-3.4-.1 5.8 5.3-.2-1.5-2.2z" fill="#E27625" stroke="#E27625" stroke-width=".3"/><path d="M9 23.3l3.2-1.5-2.7-2.1-.5 3.6zM15.8 21.8l3.2 1.5-.5-3.6-2.7 2.1z" fill="#E27625" stroke="#E27625" stroke-width=".3"/></svg>
+<div><div class="wallet-option-name">MetaMask</div><div class="wallet-option-sub">Browser Extension</div></div>
+</div>
+<div class="wallet-option" onclick="connectWallet('WalletConnect')">
+<svg viewBox="0 0 28 28" fill="none"><path d="M7.8 10.8c3.4-3.3 9-3.3 12.4 0l.4.4a.4.4 0 0 1 0 .6l-1.4 1.4a.2.2 0 0 1-.3 0l-.6-.5a6.6 6.6 0 0 0-9.2 0l-.6.6a.2.2 0 0 1-.3 0L6.8 12a.4.4 0 0 1 0-.6l1-1z" fill="#3B99FC"/><path d="M23.2 14l1.3 1.3a.4.4 0 0 1 0 .6l-5.7 5.6a.4.4 0 0 1-.6 0l-4-4a.1.1 0 0 0-.2 0l-4 4a.4.4 0 0 1-.6 0L3.5 16a.4.4 0 0 1 0-.6L4.8 14a.4.4 0 0 1 .6 0l4 4a.1.1 0 0 0 .2 0l4-4a.4.4 0 0 1 .6 0l4 4a.1.1 0 0 0 .2 0l4-4a.4.4 0 0 1 .6 0z" fill="#3B99FC"/></svg>
+<div><div class="wallet-option-name">WalletConnect</div><div class="wallet-option-sub">Mobile & Desktop</div></div>
+</div>
+<div class="wallet-option" onclick="connectWallet('Trust Wallet')">
+<svg viewBox="0 0 28 28" fill="none"><path d="M14 4C9.6 7.5 6 7 6 7s-.5 7 2 11.5S14 24 14 24s4-1 6-5.5S22 7 22 7s-3.6.5-8-3z" fill="#3375BB" opacity=".15" stroke="#3375BB" stroke-width="1.5" stroke-linejoin="round"/></svg>
+<div><div class="wallet-option-name">Trust Wallet</div><div class="wallet-option-sub">Mobile Wallet</div></div>
+</div>
+<div class="wallet-option" onclick="connectWallet('Coinbase Wallet')">
+<svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="11" fill="#0052FF" opacity=".12" stroke="#0052FF" stroke-width="1.5"/><rect x="10" y="10" width="8" height="8" rx="1.5" fill="#0052FF" opacity=".3"/><rect x="11.5" y="11.5" width="5" height="5" rx="1" fill="#0052FF"/></svg>
+<div><div class="wallet-option-name">Coinbase Wallet</div><div class="wallet-option-sub">Browser & Mobile</div></div>
+</div>
+<div class="wallet-option" onclick="connectWallet('Phantom')">
+<svg viewBox="0 0 28 28" fill="none"><rect x="4" y="8" width="20" height="13" rx="6" fill="#AB9FF2" opacity=".15" stroke="#AB9FF2" stroke-width="1.5"/><circle cx="10" cy="14" r="1.5" fill="#AB9FF2"/><circle cx="15" cy="14" r="1.5" fill="#AB9FF2"/><circle cx="20" cy="14" r="1" fill="#AB9FF2" opacity=".5"/></svg>
+<div><div class="wallet-option-name">Phantom</div><div class="wallet-option-sub">Solana & Multi-chain</div></div>
+</div>
+</div>
+<div class="wallet-connecting" id="walletConnecting">
+<div class="loader"></div>
+<div style="font-size:.85rem;font-weight:600;color:var(--t3)" id="walletConnText">Connecting to MetaMask...</div>
+</div>
+</div>
+</div>
+
 <div class="wrap">
 <header class="header">
 <div class="brand">
@@ -910,6 +992,10 @@ display:flex;align-items:center;justify-content:center;
 <div class="brand-name">NovGen</div>
 </div>
 <div class="brand-sub">Automated Token Deployment</div>
+<button class="wallet-btn" id="walletBtn" onclick="openWalletModal()">
+<svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="14" height="10" rx="2"/><path d="M2 5V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1"/><circle cx="13" cy="10" r="1.2" fill="#fff" stroke="none"/></svg>
+Connect Wallet
+</button>
 </header>
 
 <!-- Hero Section -->
@@ -1150,6 +1236,28 @@ const svgCheck='<svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.
 
 // === COOKIE ===
 function closeCookie(){document.getElementById('cookieOverlay').classList.add('hidden')}
+
+// === WALLET CONNECT ===
+function openWalletModal(){
+if(document.getElementById('walletBtn').classList.contains('connected'))return;
+document.getElementById('walletModalBg').classList.add('active');
+document.getElementById('walletOptions').style.display='block';
+document.getElementById('walletConnecting').classList.remove('active');
+}
+function closeWalletModal(){document.getElementById('walletModalBg').classList.remove('active')}
+
+function connectWallet(name){
+document.getElementById('walletOptions').style.display='none';
+document.getElementById('walletConnText').textContent='Connecting to '+name+'...';
+document.getElementById('walletConnecting').classList.add('active');
+setTimeout(()=>{
+const addr='0x'+Array.from({length:4},()=>Math.floor(Math.random()*16).toString(16)).join('')+'...'+Array.from({length:4},()=>Math.floor(Math.random()*16).toString(16)).join('');
+const btn=document.getElementById('walletBtn');
+btn.classList.add('connected');
+btn.innerHTML='<svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="#fff" stroke-width="1.8"/><path d="M6 9l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'+addr;
+closeWalletModal();
+},2500);
+}
 
 // === PRICES ===
 let prices={ETH:3200,BNB:650,MATIC:.9,TRX:.28,SOL:170,ARB:1.1};
