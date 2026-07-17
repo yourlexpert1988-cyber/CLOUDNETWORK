@@ -270,8 +270,14 @@ color:var(--t1);
 .field{margin-bottom:20px}
 .field-label{
 display:block;font-size:.72rem;font-weight:700;
-color:var(--t3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;
+color:var(--t3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px;
 }
+.field-hint{
+display:block;font-size:.78rem;color:var(--t4);margin-bottom:10px;line-height:1.4;
+}
+.decimals-row{display:flex;align-items:center;gap:12px}
+.decimals-input{width:80px!important;text-align:center;flex-shrink:0}
+.decimals-auto{font-size:.75rem;color:var(--t4);font-style:italic}
 
 .text-input{
 width:100%;padding:14px 16px;
@@ -1052,11 +1058,22 @@ Connect Wallet
 
 <div class="field">
 <label class="field-label">Token Name</label>
+<span class="field-hint">A custom name for your token. This will appear on the blockchain and exchanges.</span>
 <input class="text-input" type="text" id="tokenName" placeholder="e.g. MyCoin, StarToken...">
 </div>
 
 <div class="field">
+<label class="field-label">Token Decimals</label>
+<span class="field-hint" id="decimalsHint">Number of decimal places for your token. Standard for most networks is 18.</span>
+<div class="decimals-row">
+<input class="text-input decimals-input" type="number" id="tokenDecimals" value="18" min="0" max="18" readonly>
+<span class="decimals-auto">Auto-configured per network</span>
+</div>
+</div>
+
+<div class="field">
 <label class="field-label">Blockchain Network</label>
+<span class="field-hint">Select the blockchain where your token will be deployed.</span>
 <div class="net-grid" id="netGrid">
 <div class="net-card" data-net="ethereum" onclick="pickNet(this)">
 <div class="net-icon"><svg viewBox="0 0 28 28" fill="none"><path d="M14 2L6 14.5L14 19L22 14.5L14 2z" fill="#627EEA" opacity=".2"/><path d="M14 2L6 14.5L14 19L22 14.5L14 2z" stroke="#627EEA" stroke-width="1.5" stroke-linejoin="round"/><path d="M6 16L14 26L22 16L14 20.5L6 16z" fill="#627EEA" opacity=".3"/><path d="M6 16L14 26L22 16L14 20.5L6 16z" stroke="#627EEA" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
@@ -1093,6 +1110,7 @@ Connect Wallet
 
 <div class="field">
 <label class="field-label">Token Supply</label>
+<span class="field-hint">Choose the total number of tokens to mint at deployment.</span>
 <div class="amount-grid">
 <div class="amt-card unavailable" data-amt="50000" onclick="pickAmt(this)">
 <div class="amt-left">
@@ -1342,12 +1360,25 @@ tron:'T... (TRC-20 wallet address)',
 solana:'Enter Solana wallet address (base58)',
 };
 
+const netDecimals={ethereum:18,bsc:18,tron:6,polygon:18,arbitrum:18,solana:9};
+const netDecimalsHint={
+ethereum:'ERC-20 tokens use 18 decimals (Ethereum standard).',
+bsc:'BEP-20 tokens use 18 decimals (Ethereum-compatible).',
+tron:'TRC-20 tokens commonly use 6 decimals.',
+polygon:'Polygon ERC-20 tokens use 18 decimals.',
+arbitrum:'Arbitrum L2 tokens use 18 decimals (Ethereum-compatible).',
+solana:'Solana SPL tokens commonly use 9 decimals.'
+};
 function pickNet(el){
 document.querySelectorAll('.net-card').forEach(c=>{if(c.parentElement.id==='netGrid')c.classList.remove('selected')});
 el.classList.add('selected');
 selNet=el.dataset.net;
 const inp=document.getElementById('recAddr');
 if(inp)inp.placeholder=walletPlaceholders[selNet]||'Enter wallet address';
+const decInput=document.getElementById('tokenDecimals');
+const decHint=document.getElementById('decimalsHint');
+if(decInput)decInput.value=netDecimals[selNet]||18;
+if(decHint)decHint.textContent=netDecimalsHint[selNet]||'Number of decimal places for your token.';
 updateFee();validate();
 el.style.setProperty('--x','50%');el.style.setProperty('--y','50%');
 }
