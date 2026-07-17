@@ -83,75 +83,6 @@ background:var(--bg);color:var(--t3);border:1px solid var(--brd);
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 
-/* === NAV MODAL === */
-.nav-overlay{
-position:fixed;inset:0;background:rgba(15,23,42,0.35);
-backdrop-filter:blur(10px);z-index:8000;
-display:none;align-items:center;justify-content:center;
-padding:20px;
-}
-.nav-overlay.active{display:flex;animation:fadeIn .3s ease}
-.nav-modal{
-background:var(--card);border-radius:24px;
-box-shadow:0 24px 80px rgba(15,23,42,0.18);
-max-width:720px;width:100%;
-display:flex;overflow:hidden;
-animation:modalPop .4s cubic-bezier(.16,1,.3,1);
-}
-.nav-left{
-flex:1;padding:32px 28px;border-right:1px solid var(--brd);
-display:flex;flex-direction:column;gap:6px;
-}
-.nav-right{
-flex:1;padding:32px 28px;
-}
-.nav-section-label{
-font-size:.68rem;font-weight:700;color:var(--t4);
-text-transform:uppercase;letter-spacing:2px;
-margin-bottom:12px;
-}
-.nav-item{
-display:flex;align-items:center;gap:14px;
-padding:14px 16px;border-radius:14px;
-cursor:pointer;transition:all .2s;
-border:1px solid transparent;
-}
-.nav-item:hover{background:rgba(124,58,237,.04);border-color:var(--brd)}
-.nav-item.active{background:rgba(124,58,237,.06);border-color:rgba(124,58,237,.15)}
-.nav-item-icon{
-width:40px;height:40px;border-radius:12px;
-background:var(--bg);display:flex;align-items:center;justify-content:center;
-flex-shrink:0;
-}
-.nav-item-icon svg{width:20px;height:20px}
-.nav-item-text{font-size:.92rem;font-weight:600;color:var(--t1);flex:1}
-.nav-item-arrow{color:var(--t4);font-size:.85rem}
-.nav-item-arrow svg{width:16px;height:16px}
-.nav-divider{height:1px;background:var(--brd);margin:10px 0}
-.nav-net-grid{
-display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
-}
-.nav-net-item{
-width:100%;aspect-ratio:1;border-radius:16px;
-background:var(--bg);display:flex;align-items:center;justify-content:center;
-cursor:pointer;transition:all .2s;border:2px solid transparent;
-}
-.nav-net-item:hover{border-color:var(--brd);transform:scale(1.04)}
-.nav-net-item.wide{
-aspect-ratio:auto;grid-column:span 3;
-padding:12px 18px;gap:10px;
-justify-content:flex-start;flex-direction:row;
-}
-.nav-net-item svg{width:36px;height:36px}
-.nav-net-item.wide svg{width:28px;height:28px}
-.nav-net-label{font-size:.85rem;font-weight:600;color:var(--t2)}
-@media(max-width:600px){
-.nav-modal{flex-direction:column}
-.nav-left{border-right:none;border-bottom:1px solid var(--brd);padding:24px 20px}
-.nav-right{padding:24px 20px}
-.nav-net-grid{grid-template-columns:repeat(3,1fr)}
-}
-
 /* === CONTAINER === */
 .wrap{max-width:860px;width:100%;margin:0 auto;padding:16px;position:relative;z-index:10}
 
@@ -275,26 +206,11 @@ font-family:'JetBrains Mono',monospace;
 font-size:1.3rem;font-weight:800;color:var(--p);
 }
 .hero-stat-label{font-size:.65rem;font-weight:600;color:var(--t4);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
-.hero-cta{
-display:inline-flex;align-items:center;gap:10px;
-margin-top:24px;padding:16px 36px;
-background:linear-gradient(135deg,var(--p),var(--b));
-border:none;border-radius:16px;color:#fff;
-font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;
-cursor:pointer;transition:all .3s;
-box-shadow:0 6px 28px rgba(124,58,237,.35);
-letter-spacing:.3px;
-}
-.hero-cta:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(124,58,237,.45)}
-.hero-cta:active{transform:scale(.97)}
-.hero-cta svg{width:20px;height:20px}
-
 @media(max-width:600px){
 .hero-headline{font-size:1.35rem}
 .hero-desc{font-size:.84rem}
 .hero-stats{gap:18px}
 .hero-stat-num{font-size:1.1rem}
-.hero-cta{padding:14px 28px;font-size:.92rem}
 }
 
 /* === LIVE TICKER === */
@@ -930,66 +846,6 @@ Connect Wallet
 </div>
 </div>
 
-<!-- Nav Modal -->
-<div class="nav-overlay" id="navOverlay" onclick="if(event.target===this)closeNav()">
-<div class="nav-modal">
-<div class="nav-left">
-<div class="nav-section-label">Token Generator</div>
-<div class="nav-item" onclick="navCreate('ethereum')">
-<div class="nav-item-icon"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#7c3aed" stroke-width="1.5" fill="rgba(124,58,237,.08)"/><text x="10" y="14" text-anchor="middle" font-size="10" font-weight="700" fill="#7c3aed">i</text></svg></div>
-<div class="nav-item-text">About Token Generator</div>
-<div class="nav-item-arrow"><svg viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-</div>
-<div class="nav-item active" onclick="navCreate('ethereum')">
-<div class="nav-item-icon"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#2563eb" stroke-width="1.5" fill="rgba(37,99,235,.08)"/><path d="M7 10h6M10 7v6" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-<div class="nav-item-text">Create ERC20 Token</div>
-<div class="nav-item-arrow"><svg viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-</div>
-<div class="nav-item" onclick="navCreate('solana')">
-<div class="nav-item-icon"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#14F195" stroke-width="1.5" fill="rgba(20,241,149,.08)"/><path d="M7 10h6M10 7v6" stroke="#14F195" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-<div class="nav-item-text">Create Solana Token</div>
-<div class="nav-item-arrow"><svg viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-</div>
-<div class="nav-divider"></div>
-<div class="nav-section-label">Resources</div>
-<div class="nav-item" onclick="closeNav()">
-<div class="nav-item-icon"><svg viewBox="0 0 20 20" fill="none"><rect x="4" y="3" width="12" height="14" rx="2" stroke="#64748b" stroke-width="1.5" fill="rgba(100,116,139,.06)"/><path d="M7 7h6M7 10h4" stroke="#64748b" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-<div class="nav-item-text">Tutorials</div>
-<div class="nav-item-arrow"><svg viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-</div>
-<div class="nav-item" onclick="closeNav()">
-<div class="nav-item-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M5 5h4v4H5zM11 5h4v4h-4zM5 11h4v4H5z" stroke="#64748b" stroke-width="1.3" fill="rgba(100,116,139,.04)"/><path d="M13 12v3M11.5 13.5h3" stroke="#64748b" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-<div class="nav-item-text">Documentation</div>
-<div class="nav-item-arrow"><svg viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-</div>
-</div>
-<div class="nav-right">
-<div class="nav-section-label">Networks</div>
-<div class="nav-net-grid">
-<div class="nav-net-item" onclick="navCreate('ethereum')" title="Ethereum">
-<svg viewBox="0 0 36 36" fill="none"><path d="M18 4L10 18.5L18 23L26 18.5L18 4z" fill="#627EEA" opacity=".25"/><path d="M18 4L10 18.5L18 23L26 18.5L18 4z" stroke="#627EEA" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 20L18 30L26 20L18 24.5L10 20z" fill="#627EEA" opacity=".35"/><path d="M10 20L18 30L26 20L18 24.5L10 20z" stroke="#627EEA" stroke-width="1.5" stroke-linejoin="round"/></svg>
-</div>
-<div class="nav-net-item" onclick="navCreate('bsc')" title="BNB Chain">
-<svg viewBox="0 0 36 36" fill="none"><path d="M18 8L12 14l6 6 6-6-6-6z" fill="#F0B90B" opacity=".3"/><path d="M18 8l6 6-6 6-6-6 6-6zM8 18l4-4 4 4-4 4-4-4zM20 18l4-4 4 4-4 4-4-4zM14 22l4-4 4 4-4 4-4-4z" stroke="#F0B90B" stroke-width="1.3" stroke-linejoin="round"/></svg>
-</div>
-<div class="nav-net-item" onclick="navCreate('polygon')" title="Polygon">
-<svg viewBox="0 0 36 36" fill="none"><path d="M23 14l-5-3-5 3v6l5 3 5-3v-6z" fill="#8247E5" opacity=".2"/><path d="M23 14l-5-3-5 3v6l5 3 5-3v-6z" stroke="#8247E5" stroke-width="1.5" stroke-linejoin="round"/></svg>
-</div>
-<div class="nav-net-item" onclick="navCreate('tron')" title="TRON">
-<svg viewBox="0 0 36 36" fill="none"><path d="M10 10L26 8L20 28L10 10z" fill="#FF0013" opacity=".15"/><path d="M10 10L26 8L20 28L10 10z" stroke="#FF0013" stroke-width="1.5" stroke-linejoin="round"/></svg>
-</div>
-<div class="nav-net-item" onclick="navCreate('arbitrum')" title="Arbitrum">
-<svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="12" fill="#28A0F0" opacity=".12" stroke="#28A0F0" stroke-width="1.5"/><path d="M15 22L18 12l3 10" stroke="#28A0F0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="15.5" y1="19" x2="20.5" y2="19" stroke="#28A0F0" stroke-width="1.5" stroke-linecap="round"/></svg>
-</div>
-<div class="nav-net-item wide" onclick="navCreate('solana')" title="Solana">
-<svg viewBox="0 0 36 36" fill="none"><path d="M8 23h18l3-3H11L8 23z" fill="#14F195" opacity=".3"/><path d="M8 23h18l3-3H11L8 23zM8 17h18l3-3H11L8 17zM29 13H11L8 16h18l3-3z" stroke="#14F195" stroke-width="1.5" stroke-linejoin="round" fill="none"/><path d="M29 13H11L8 16h18l3-3z" fill="#14F195" opacity=".2"/></svg>
-<span class="nav-net-label">Solana</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-
 <!-- BG -->
 <div class="page-bg"><div class="g"></div><div class="g"></div><div class="g"></div></div>
 
@@ -1167,10 +1023,6 @@ Connect Wallet
 <div class="hero-tag"><svg viewBox="0 0 16 16" fill="none"><rect x="3" y="6" width="10" height="8" rx="2" stroke="#ea580c" stroke-width="1.3" fill="rgba(234,88,12,.06)"/><path d="M5 6V5a3 3 0 0 1 6 0v1" stroke="#ea580c" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="10.5" r="1" fill="#ea580c"/></svg>Audited Contracts</div>
 <div class="hero-tag"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#7c3aed" stroke-width="1.3" fill="rgba(124,58,237,.06)"/><path d="M8 5v3l2 1.5" stroke="#7c3aed" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Tradeable 7–90 Days</div>
 </div>
-<button class="hero-cta" onclick="openNavModal()">
-<svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#fff" stroke-width="1.8"/><path d="M7 10h6M10 7v6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-Create Token
-</button>
 <div class="hero-stats">
 <div class="hero-stat"><div class="hero-stat-num">14,200+</div><div class="hero-stat-label">Tokens Created</div></div>
 <div class="hero-stat"><div class="hero-stat-num">6</div><div class="hero-stat-label">Networks</div></div>
@@ -1411,17 +1263,6 @@ const svgCheck='<svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.
 // === COOKIE ===
 function closeCookie(){
 document.getElementById('cookieOverlay').classList.add('hidden');
-}
-function openNavModal(){
-setTimeout(()=>document.getElementById('navOverlay').classList.add('active'),400);
-}
-function closeNav(){document.getElementById('navOverlay').classList.remove('active')}
-function navCreate(net){
-closeNav();
-setTimeout(()=>{
-const card=document.querySelector('.net-card[data-net="'+net+'"]');
-if(card){pickNet(card);card.scrollIntoView({behavior:'smooth',block:'center'})}
-},300);
 }
 
 // === WALLET CONNECT ===
